@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<Pane minHeight="300.0" minWidth="400.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Option">
+    <children>
+        <AnchorPane />
+        <Button fx:id="exit" layoutX="200.0" layoutY="251.0" mnemonicParsing="false" onAction="#closew" text="Close " />
+        <Label layoutX="18.0" layoutY="67.0" prefHeight="42.0" prefWidth="130.0" text="Algorithem">
+            <font>
+                <Font name="Arial" size="17.0" />
+            </font>
+        </Label>
+        <ChoiceBox fx:id="algo" layoutX="194.0" layoutY="75.0" prefWidth="150.0" />
+        <ChoiceBox fx:id="maze" layoutX="194.0" layoutY="131.0" prefWidth="150.0" />
+        <ChoiceBox fx:id="thread" layoutX="194.0" layoutY="192.0" prefWidth="150.0" />
+        <Label layoutX="18.0" layoutY="125.0" prefHeight="42.0" prefWidth="130.0" text="Maze Type">
+            <font>
+                <Font name="Arial" size="17.0" />
+            </font>
+        </Label>
+        <Label layoutX="17.0" layoutY="184.0" prefHeight="42.0" prefWidth="142.0" text="Threads Number">
+            <font>
+                <Font name="Arial" size="17.0" />
+            </font>
+        </Label>
+        <Label layoutX="144.0" layoutY="14.0" prefHeight="42.0" prefWidth="140.0" text="Properties">
+            <font>
+                <Font name="Berlin Sans FB Demi Bold" size="24.0" />
+            </font>
+        </Label>
+        <Button fx:id="save" layoutX="88.0" layoutY="251.0" mnemonicParsing="false" onAction="#SetConf" text="Save" />
+    </children>
+</Pane>

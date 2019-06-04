@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import View.MazeDisplay?>
+<BorderPane onKeyPressed="#KeyPressed" prefHeight="480.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
+    <top>
+        <MenuBar prefWidth="600.0" BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#generateMaze" text="New Maze" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveGame" text="Save Maze" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadGame" text="Load Maze" />
+                        <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Options">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#Option" text="Properties" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#Help" text="Help" />
+                        <MenuItem mnemonicParsing="false" onAction="#About" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+      <AnchorPane fx:id="MazePane" minHeight="450" minWidth="450" BorderPane.alignment="CENTER">
+         <children>
+              <MazeDisplay fx:id="mazeDisplayer" height="${MazePane.height}" width="${MazePane.width}" />
+         </children>
+      </AnchorPane>
+    </center>
+    <left>
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="10.0" prefWidth="75.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="63.0" minWidth="10.0" prefWidth="61.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Row" translateX="6.0" translateY="5.0" translateZ="24.0" />
+                            </children>
+                        </VBox>
+                        <TextField fx:id="txt_col" text="10" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txt_row" text="10" GridPane.columnIndex="1" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Col" translateX="8.0" GridPane.rowIndex="1" />
+                        <Label fx:id="lbl_rowsNum" text="Row" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="lbl_columnsNum" text="Col" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" Current Row" GridPane.rowIndex="2" />
+                        <Text layoutX="10.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Current Col" GridPane.rowIndex="3" />
+                    </children>
+                </GridPane>
+                <AnchorPane prefHeight="336.0" prefWidth="136.0">
+                    <children>
+                        <Button fx:id="SolveMaze" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#solveMaze" prefHeight="25.0" prefWidth="132.0" text="Solve Maze" visible="false" />
+                        <Button fx:id="GenerateMaze" defaultButton="true" layoutX="4.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateMaze" prefHeight="25.0" prefWidth="118.0" text="Generate" />
+                        <Button fx:id="save" layoutX="10.0" layoutY="169.0" mnemonicParsing="false" onAction="#saveGame" text="Save Game" visible="false" />
+                  <Button fx:id="btn_StopMusic" defaultButton="true" layoutX="10.0" layoutY="206.0" mnemonicParsing="false" onAction="#Mute" prefHeight="25.0" prefWidth="64.0" text="Mute" />
+                  <Button layoutX="8.0" layoutY="116.0" mnemonicParsing="false" onAction="#MazeInfo" text="Game Info" textAlignment="CENTER" textFill="#fc0606">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Button>
+                  <Text layoutX="15.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" wrappingWidth="53.59765625" />
+                  <Text layoutX="58.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="lives" wrappingWidth="53.59765625" />
+                  <MenuBar layoutX="8.0" layoutY="169.0" prefHeight="26.0" prefWidth="122.0">
+                    <menus>
+                      <Menu mnemonicParsing="false" text="Select Character">
+                        <items>
+                          <MenuItem mnemonicParsing="false" onAction="#ChooseJon" text="Jon" />
+                              <MenuItem mnemonicParsing="false" text="Dani" />
+                              <MenuItem mnemonicParsing="false" text="Sersie" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+                    </children>
+                </AnchorPane>
+            <AnchorPane />
+            </children>
+        </VBox>
+    </left>
+</BorderPane>

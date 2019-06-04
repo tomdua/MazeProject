@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -257,7 +258,7 @@ public class MyViewController implements Observer, IView {
         }
         else {
             songonce=true;
-            path = "resources\\end.mp3K";
+            path = "resources\\end.mp3";
         }Media tempp = new Media(Paths.get(path).toUri().toString());
         mediaPlayer = new MediaPlayer(tempp);
         mediaPlayer.play();
@@ -331,6 +332,4 @@ public class MyViewController implements Observer, IView {
         }
     }
 
-    public void ChooseJon(ActionEvent actionEvent) {
-    }
 }

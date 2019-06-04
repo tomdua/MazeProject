@@ -27,18 +27,9 @@ public class About implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         text.setWrapText(true);
-        text.setText("Hello and welcome to Itzik and Raanan's project.\n" +
-                "Here you will see our project we made in java.\n" +
-                "This is a game of maze and you need to get the character " +
-                "to the end of the maze where the flag is.\n" +
-                "Hope you enjoy our game! good luck");
-        Image SmallImageNearExit = null;
-        try {
-            SmallImageNearExit = new Image(new File("resources/images/exit.png").toURI().toURL().toExternalForm());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        NearExit.setImage(SmallImageNearExit);
-
+        text.setText("Welcome to Game Of Thorns Maze by Almog & Tom \n" +
+                "Here they compete for the iron throne!" +
+                "To win, you have to go to the throne. Just beware of the walls!\n" +
+                "Good luck and not kill in the way");
     }
 }

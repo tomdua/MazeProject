@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class MazeDisplay extends Canvas {
-
     private int[][] maze;
     private int characterPositionRow;
     private int characterPositionColumn;
@@ -72,7 +71,7 @@ public class MazeDisplay extends Canvas {
                 //Draw solution
                 if (isSolved) {
                     //Image SolutionImage = new Image(new FileInputStream("resources/images/eat.png"));
-                    Image SolutionImage = new Image(new FileInputStream("resources/images/egg.png"));
+                    Image SolutionImage = new Image(new FileInputStream("resources/images/clue.png"));
                     for (int i = 0; i < solved[0].length - 1; i++) {
                         int x = solved[0][i];
                         int y = solved[1][i];

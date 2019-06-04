@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Help">
-    <children>
-        <TabPane prefHeight="234.0" prefWidth="433.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
-                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <tabs>
-                <Tab text="Game Instruction">
-                    <content>
-                        <AnchorPane prefHeight="205.0" prefWidth="523.0">
-                            <children>
-                                <Button fx:id="exit" layoutX="171.0" layoutY="151.0" mnemonicParsing="false"
-                                        onAction="#closew" text="Close Window"/>
-                                <Label layoutX="8.0" layoutY="6.0" prefHeight="163.0" prefWidth="425.0"
-                                       text="Hello, and welcome to our maze game.&#10;In this game you will need to find a path from start position to&#10;end position. If you want to get the solution please use the&#10;&quot;Solve Maze &quot; button and follow the signs with your character&#10;if you want a hint, you can use the Hint button to get only 1&#10; step of the solution each time you press Hint.&#10;enjoy~!"
-                                       AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="8.0"
-                                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <font>
-                                        <Font size="15.0"/>
-                                    </font>
-                                </Label>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
-                <Tab text="Controllers">
-                    <content>
-                        <AnchorPane>
-                            <children>
-                                <Label layoutX="3.0" layoutY="5.0" prefHeight="159.0" prefWidth="427.0"
-                                       text="Hello, in oreder to play the game, &#10;make sure your numlock is working&#10;Up = 8                 Diagnal Up And Left = 7&#10;Down = 2            Diagnal Up And Right = 9&#10;Left = 4               Diagnal Down And Left = 1&#10;Right = 6             Diagnal Down And Right = 3">
-                                    <font>
-                                        <Font size="18.0"/>
-                                    </font>
-                                </Label>
-                                <Button fx:id="exit" layoutX="171.0" layoutY="166.0" mnemonicParsing="false"
-                                        onAction="#closew" text="Close Window"/>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
-    </children>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="View.Help">
+  <children>
+    <TabPane prefHeight="234.0" prefWidth="433.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <tabs>
+        <Tab text="Game Instruction">
+          <content>
+            <AnchorPane prefHeight="205.0" prefWidth="523.0">
+              <children>
+                <Button fx:id="Exit" layoutX="171.0" layoutY="151.0" mnemonicParsing="false" onAction="#closew" text="Close Window" />
+                <Label prefHeight="163.0" prefWidth="425.0" text="First you have to choose the character!&#10;Now it's possible to start :)&#10;You start at a starting point, and you have to reach the end point as quickly as possible.&#10;Watch out for the walls!&#10;If you get stuck and do not know where to go,&#10; you can use the Solve maze button" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <font>
+                    <Font size="15.0" />
+                  </font>
+                </Label>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Controllers">
+          <content>
+            <AnchorPane>
+              <children>
+                <Label layoutX="3.0" layoutY="5.0" prefHeight="159.0" prefWidth="427.0" text="Game Controllers&#10;Up = 8 / W          &#10;Down = 2 / S           &#10;Left = 4  / A             &#10;Right = 6  / D          ">
+                  <font>
+                    <Font name="Book Antiqua Bold" size="17.0" />
+                  </font>
+                </Label>
+                <Button fx:id="exit" layoutX="171.0" layoutY="166.0" mnemonicParsing="false" onAction="#closew" text="Close Window" />
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+  </children>
 </AnchorPane>

@@ -253,11 +253,11 @@ public class MyViewController implements Observer, IView {
         String path = "";
         if (x == 0) {
             songonce = false;
-            path = "resources\\song.mp3";
+            path = "resources\\start.mp3";
         }
         else {
             songonce=true;
-            path = "resources\\end.mpeg";
+            path = "resources\\end.mp3K";
         }Media tempp = new Media(Paths.get(path).toUri().toString());
         mediaPlayer = new MediaPlayer(tempp);
         mediaPlayer.play();

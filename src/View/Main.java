@@ -18,15 +18,13 @@ import java.util.Optional;
 
 public class Main extends Application {
 
-    //TODO add javadocs
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         MyModel model = new MyModel();
         MyViewModel viewModel = new MyViewModel(model);
         model.addObserver(viewModel);
         //--------------
-        primaryStage.setTitle("Itzik's and Raanan's Maze!");
+        primaryStage.setTitle("Game Of Thrones Maze!");
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent root = fxmlLoader.load(getClass().getResource("MyView.fxml").openStream());
 

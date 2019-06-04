@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class MazeDisplay extends Canvas {
-
     private int[][] maze;
     private int characterPositionRow;
     private int characterPositionColumn;
@@ -72,7 +71,7 @@ public class MazeDisplay extends Canvas {
                 //Draw solution
                 if (isSolved) {
                     //Image SolutionImage = new Image(new FileInputStream("resources/images/eat.png"));
-                    Image SolutionImage = new Image(new FileInputStream("resources/images/egg.png"));
+                    Image SolutionImage = new Image(new FileInputStream("resources/images/clue.png"));
                     for (int i = 0; i < solved[0].length - 1; i++) {
                         int x = solved[0][i];
                         int y = solved[1][i];
@@ -86,10 +85,10 @@ public class MazeDisplay extends Canvas {
                 //gc.setFill(Color.RED);
                 //gc.fillOval(characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
                 //draw start point
-                Image StartPoint = new Image(new FileInputStream("resources/images/house.jpg"));
+                Image StartPoint = new Image(new FileInputStream("resources/images/LannisterHome.png"));
                 graphicsContext2D.drawImage(StartPoint, 0, 0, cellHeight, cellWidth);
                 //Draw Character
-                Image characterImage = new Image(new FileInputStream("resources/images/neta.png"));
+                Image characterImage = new Image(new FileInputStream("resources/images/CerseiLannister.png"));
                 graphicsContext2D.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
             } catch (FileNotFoundException e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

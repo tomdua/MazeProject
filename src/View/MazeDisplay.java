@@ -61,7 +61,7 @@ public class MazeDisplay extends Canvas {
                             graphicsContext2D.drawImage(wallImage, j * cellHeight, i * cellWidth, cellHeight, cellWidth);
                         }
 //                        graphicsContext2D.setFill(Color.WHITE);
-//                        graphicsContext2D.fillRect(i,j,cellHeight,cellWidth);
+//                        graphicsContext2D.fillRect(numOfMaze,j,cellHeight,cellWidth);
                     }
                 }
 

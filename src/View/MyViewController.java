@@ -21,7 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.Observable;
 import java.util.Observer;
@@ -31,16 +31,21 @@ public class MyViewController implements Observer, IView {
     @FXML
     private MyViewModel viewModel = new MyViewModel(new MyModel());
     public MazeDisplay mazeDisplayer = new MazeDisplay();
-    int i = 0;
+    static Thread timeThred=new Thread();
+    int numOfMaze = 0;
     boolean showOnce = false;
     boolean songonce = true;
     public javafx.scene.control.TextField txt_row;
     public javafx.scene.control.TextField txt_col;
+
     public javafx.scene.control.Label lbl_rowsNum;
-    public javafx.scene.control.Label lbl_columnsNum;//where user wants to go
-    public javafx.scene.control.Button GenerateMaze;
-    public javafx.scene.control.Button SolveMaze;
-    public javafx.scene.control.Button save;
+    public javafx.scene.control.Label lbl_columnsNum;
+    public javafx.scene.control.Label lbl_timeLeft;
+    public javafx.scene.control.Label lbl_livesLeft;
+
+    public javafx.scene.control.Button btn_GenerateMaze;
+    public javafx.scene.control.Button btn_SolveMaze;
+  //  public javafx.scene.control.Button save;
     public javafx.scene.control.Button btn_StopMusic;
     private MediaPlayer mediaPlayer;
 
@@ -53,6 +58,7 @@ public class MyViewController implements Observer, IView {
     }
 
     private void bindProperties(MyViewModel viewModel) {
+    //    lbl_rowsNum.t
         lbl_rowsNum.textProperty().bind(viewModel.characterPositionRow);
         lbl_columnsNum.textProperty().bind(viewModel.characterPositionColumn);
     }
@@ -64,7 +70,7 @@ public class MyViewController implements Observer, IView {
             mazeDisplayer.setCharacterPosition(viewModel.getCharacterPositionRow(), viewModel.getCharacterPositionColumn());
             mazeDisplayer.setGoalPosition(viewModel.getEndPosition());
             displayMaze(viewModel.getMaze());
-            GenerateMaze.setDisable(false);
+            btn_GenerateMaze.setDisable(false);
 
             if (viewModel.gameFinish() && !showOnce) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -94,7 +100,7 @@ public class MyViewController implements Observer, IView {
     public void generateMaze() {
         if (songonce == true)
             Music(0);
-        save.setVisible(true);
+        Timer();
         showOnce = false;
         int height;
         int width;
@@ -111,20 +117,9 @@ public class MyViewController implements Observer, IView {
         int[][] temp = viewModel.generateMaze(height, width);
         mazeDisplayer.setMaze(temp);
         mazeDisplayer.endposition(viewModel.getEndPosition());
-        SolveMaze.setVisible(true);
+        btn_SolveMaze.setVisible(true);
         displayMaze(temp);
     }
-
-    public void solveMaze(ActionEvent actionEvent) {
-        showAlert("Solving maze..");
-        viewModel.getSolution(this.viewModel, this.viewModel.getCharacterPositionRow(), this.viewModel.getCharacterPositionColumn(), "solve");
-    }
-
-
-    public void exit(ActionEvent actionEvent) {
-        Platform.exit();
-    }
-
 
 
     private void showAlert(String alertMessage) {
@@ -171,7 +166,7 @@ public class MyViewController implements Observer, IView {
         });
     }
 
-    public void MazeInfo() {
+  /*  public void MazeInfo() {
         String text = null;
         OutputStream output = null;
         try {
@@ -208,43 +203,25 @@ public class MyViewController implements Observer, IView {
             alert.setContentText(content);
             alert.show();
         }
-    }
+    }*/
 
-    private String splitLine(String s) {
+  /*  private String splitLine(String s) {
         String [] splitedLine = s.split("=");
         return splitedLine[1];
-    }
+    }*/
 
-    public void About(ActionEvent actionEvent) {
-        try {
-            Stage stage = new Stage();
-            stage.setTitle("About");
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass().getResource("About.fxml").openStream());
-            Scene scene = new Scene(root, 300, 165);
-            scene.getStylesheets().add("box.css");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Error About.fxml not found");
+    public void Timer(){
+        for (int j=0;j>=60;j--){
+            try {
+                timeThred.sleep(1000);
+                lbl_timeLeft.textProperty().setValue(Integer.toString(j));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-    }
 
-    public void Help(ActionEvent actionEvent) {
-        try {
-            Stage stage = new Stage();
-            stage.setTitle("Help");
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass().getResource("Help.fxml").openStream());
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add("box.css");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Error Help.fxml not found");
-        }
+
+
     }
 
     public void Music(int x) {
@@ -262,6 +239,51 @@ public class MyViewController implements Observer, IView {
         mediaPlayer = new MediaPlayer(tempp);
         mediaPlayer.play();
     }
+
+    public void solveMaze(ActionEvent actionEvent) {
+        showAlert("Solving maze..");
+        viewModel.getSolution(this.viewModel, this.viewModel.getCharacterPositionRow(), this.viewModel.getCharacterPositionColumn(), "solve");
+    }
+
+
+    public void exit(ActionEvent actionEvent) {
+        Platform.exit();
+    }
+
+
+    public void About(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            stage.setTitle("About");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Parent root = fxmlLoader.load(getClass().getResource("About.fxml").openStream());
+            Scene scene = new Scene(root, 300, 165);
+            scene.getStylesheets().add("box.css");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Error About.fxml not found");
+        }
+    }
+
+
+    public void Help(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            stage.setTitle("Help");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Parent root = fxmlLoader.load(getClass().getResource("Help.fxml").openStream());
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("box.css");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Error Help.fxml not found");
+        }
+    }
+
 
     public void Option(ActionEvent actionEvent) {
         try {
@@ -285,8 +307,8 @@ public class MyViewController implements Observer, IView {
         if (!filePath.exists())
             filePath.mkdir();
         fc.setTitle("Saving maze");
-        fc.setInitialFileName("Maze Number " + i + "");
-        i++;
+        fc.setInitialFileName("Maze Number " + numOfMaze + "");
+        numOfMaze++;
         fc.setInitialDirectory(filePath);
         File file = fc.showSaveDialog((Stage) mazeDisplayer.getScene().getWindow());
         if (file != null)
@@ -294,7 +316,6 @@ public class MyViewController implements Observer, IView {
     }
 
     public void loadGame() {
-
         FileChooser fc = new FileChooser();
         fc.setTitle("Loading maze");
         File filePath = new File("./Mazes/");
@@ -331,6 +352,4 @@ public class MyViewController implements Observer, IView {
         }
     }
 
-    public void ChooseJon(ActionEvent actionEvent) {
-    }
 }

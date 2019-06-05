@@ -21,6 +21,11 @@ public class MazeDisplay extends Canvas {
         this.maze = maze;
     }
 
+    public int[][] getMaze() {
+        return maze;
+    }
+
+
     public void endposition(algorithms.mazeGenerators.Position end) {
         endPosition = end;
     }
@@ -33,6 +38,14 @@ public class MazeDisplay extends Canvas {
     public void setCharacterPosition(int row, int column) {
         characterPositionRow = row;
         characterPositionColumn = column;
+    }
+
+    public int getCharacterPositionRaw() {
+       return characterPositionRow;
+    }
+
+    public int getCharacterPositionColumn() {
+        return characterPositionColumn;
     }
 
     public void redraw() {

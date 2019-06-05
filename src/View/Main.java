@@ -17,6 +17,7 @@ import javafx.stage.WindowEvent;
 import java.util.Optional;
 
 public class Main extends Application {
+    public static Stage primaryStage;
 
     public static void main(String[] args) {
         launch(args);
@@ -24,6 +25,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.primaryStage = primaryStage;
         MyModel model = new MyModel();
         MyViewModel viewModel = new MyViewModel(model);
         model.addObserver(viewModel);
@@ -45,7 +47,15 @@ public class Main extends Application {
         view.setViewModel(viewModel);
         viewModel.addObserver(view);
         primaryStage.setScene(scene);
+        //--------------
+        scene.setOnScroll(event1 -> {
+            view.scroll(event1);
+        });
 
+        //--------------
+        scene.setOnMouseDragged(event -> {
+            view.mouseDrag(event);
+        });
         //--------------
         SetStageCloseEvent(primaryStage);
         primaryStage.show();

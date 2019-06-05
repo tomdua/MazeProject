@@ -6,6 +6,7 @@ import IO.MyDecompressorInputStream;
 import Server.Server;
 import Server.ServerStrategyGenerateMaze;
 import Server.ServerStrategySolveSearchProblem;
+import View.Main;
 import View.MazeDisplay;
 import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
@@ -15,6 +16,8 @@ import algorithms.search.MazeState;
 import algorithms.search.Solution;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -189,7 +192,29 @@ public class MyModel extends Observable implements IModel {
 
     @Override
     public void moveCharacter(MouseEvent movement, MazeDisplay md) {
+        int mouseY = (int) Math.floor(movement.getSceneY() / (md.getWidth()/md.getMaze()[0].length));
+        int mouseX = (int) Math.floor(movement.getSceneX() / (md.getHeight()/md.getMaze().length));
+        if (mouseY < md.getCharacterPositionRaw())
+            moveCharacter(KeyCode.NUMPAD8);
+        if (mouseY > md.getCharacterPositionRaw())
+            moveCharacter(KeyCode.NUMPAD2);
+        if (mouseX < md.getCharacterPositionColumn())
+            moveCharacter(KeyCode.NUMPAD4);
+        if (mouseX > md.getCharacterPositionColumn())
+            moveCharacter(KeyCode.NUMPAD6);
+    }
 
+    public void scroll(ScrollEvent event, MazeDisplay mazeDisplay) {
+        Double direction = event.getDeltaY();
+        Stage stage  = Main.primaryStage;
+        if(direction > 0) {
+            stage.setHeight(stage.getHeight()+5);
+            stage.setWidth(stage.getWidth()+5);
+        }else{
+            stage.setHeight(stage.getHeight()-5);
+            stage.setWidth(stage.getWidth()-5);
+        }
+        mazeDisplay.redraw();
     }
 
     @Override

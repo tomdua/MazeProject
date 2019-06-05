@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
@@ -36,7 +37,7 @@ import java.util.Observer;
 public class MyViewController implements Observer, IView {
 
     @FXML
-    private MyViewModel viewModel = new MyViewModel(new MyModel());
+    private static MyViewModel viewModel = new MyViewModel(new MyModel());
     public MazeDisplay mazeDisplay = new MazeDisplay();
 
     private static final int startTime=10;
@@ -355,5 +356,12 @@ public class MyViewController implements Observer, IView {
             }
         }
     }
+
+
+    public void scroll(ScrollEvent event) {
+        viewModel.scroll(event, mazeDisplay);
+    }
+
+
 
 }

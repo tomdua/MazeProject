@@ -1,11 +1,12 @@
 package ViewModel;
 
 import Model.IModel;
-import algorithms.mazeGenerators.Maze;
+import View.MazeDisplay;
 import algorithms.mazeGenerators.Position;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.util.Observable;
@@ -50,6 +51,10 @@ public class MyViewModel extends Observable implements Observer {
         model.moveCharacter(movement);
     }
 
+    public void moveCharacter(MouseEvent movement, MazeDisplay mazeDisplay) {
+        model.moveCharacter(movement,mazeDisplay);
+    }
+
     public boolean gameFinish() {
         return model.gameFinish();
     }
@@ -58,9 +63,6 @@ public class MyViewModel extends Observable implements Observer {
         return model.getMaze();
     }
 
-    public Maze getOriginal() {
-        return model.getOriginal();
-    }
 
     public int getCharacterPositionRow() {
         return characterPositionRowIndex;
@@ -78,7 +80,7 @@ public class MyViewModel extends Observable implements Observer {
         return model.isSolved();
     }
 
-    public void setCharacterPositionRow(int row) {
+/*    public void setCharacterPositionRow(int row) {
         characterPositionRowIndex = row;
         model.setCharacterPositionRow(row);
     }
@@ -86,24 +88,28 @@ public class MyViewModel extends Observable implements Observer {
     public void setCharacterPositionColumn(int col) {
         characterPositionColumnIndex = col;
         model.setCharacterPositionCol(col);
-    }
+    }*/
 
     public void setMaze(int[][] maze) {
         model.setMaze(maze);
     }
 
 
+/*
     public void setGoalPosition(Position goalPosition) {
         model.setGoalPosition(goalPosition);
     }
+*/
 
     public int[][] getMazeSolutionArr() {
         return model.getMazeSolutionArr();
     }
 
+/*
     public void setMazeOriginal(Maze mazeOriginal) {
         model.setMazeOriginal(mazeOriginal);
     }
+*/
 
     public void save(File file) {
         model.save(file);

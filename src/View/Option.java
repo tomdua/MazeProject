@@ -1,7 +1,6 @@
 package View;
 
-import Server.Configurations;
-import javafx.application.Platform;
+import Server.Server;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
@@ -22,9 +21,9 @@ public class Option implements Initializable {
     String mazeP="MyMazeGenerator";
     String core="2";
 
-    public void close() {
+   /* public void close() {
         Platform.exit();
-    }
+    }*/
 
     public void closew() {
         Stage s = (Stage) exit.getScene().getWindow();
@@ -39,7 +38,7 @@ public class Option implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Configurations.config();
+        Server.Configurations.Conf();
 
         algo.getItems().addAll("BFS", "DFS");
         maze.getItems().addAll("SimpleMaze", "MyMazeGenerator");
@@ -85,9 +84,9 @@ public class Option implements Initializable {
             if (thread.getValue()==(String)"4")
                 core="4";
 
-            prop.setProperty("MazeAlgoType", algor);
+            prop.setProperty("MazeAlgorithmSearch", algor);
             prop.setProperty("numberCores", core);
-            prop.setProperty("MazeType", mazeP);
+            prop.setProperty("MazeGenerator", mazeP);
 
             // save properties to project root folder
             prop.store(output, null);

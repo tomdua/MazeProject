@@ -6,6 +6,7 @@ import IO.MyDecompressorInputStream;
 import Server.Server;
 import Server.ServerStrategyGenerateMaze;
 import Server.ServerStrategySolveSearchProblem;
+import View.MazeDisplay;
 import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
@@ -13,6 +14,7 @@ import algorithms.search.AState;
 import algorithms.search.MazeState;
 import algorithms.search.Solution;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -146,6 +148,7 @@ public class MyModel extends Observable implements IModel {
                     characterPositionColumn--;
                 break;
             case NUMPAD3:
+            case C:
                 if (!isNotLegalMove(x + 1, y + 1))
                     if (!isNotLegalMove(x, y + 1) || !isNotLegalMove(x + 1, y)) {
                         characterPositionColumn++;
@@ -153,6 +156,7 @@ public class MyModel extends Observable implements IModel {
                     }
                 break;
             case NUMPAD1:
+            case Z:
                 if (!isNotLegalMove(x + 1, y - 1))
                     if (!isNotLegalMove(x, y - 1) || !isNotLegalMove(x + 1, y)) {
                         characterPositionColumn--;
@@ -160,6 +164,7 @@ public class MyModel extends Observable implements IModel {
                     }
                 break;
             case NUMPAD9:
+            case E:
                 if (!isNotLegalMove(x - 1, y + 1))
                     if (!isNotLegalMove(x - 1, y) || !isNotLegalMove(x, y + 1)) {
                         characterPositionColumn++;
@@ -167,6 +172,7 @@ public class MyModel extends Observable implements IModel {
                     }
                 break;
             case NUMPAD7:
+            case Q:
                 if (!isNotLegalMove(x - 1, y - 1))
                     if (!isNotLegalMove(x, y - 1) || !isNotLegalMove(x - 1, y)) {
                         characterPositionColumn--;
@@ -178,6 +184,11 @@ public class MyModel extends Observable implements IModel {
             gameFinish = true;
         setChanged();
         notifyObservers();
+
+    }
+
+    @Override
+    public void moveCharacter(MouseEvent movement, MazeDisplay md) {
 
     }
 
@@ -228,7 +239,6 @@ public class MyModel extends Observable implements IModel {
                         toServer.flush();
                         Solution mazeSolution = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor)from server
                         //Print Maze Solution retrieved from the server
-                        //TODO if (x == "solve") ? I USE THIS FUNCTION FOR HINTS AND SOLVE
                             solved = true;
                         ArrayList<AState> mazeSolutionSteps = mazeSolution.getSolutionPath();
                         int sizeOfSolution = mazeSolutionSteps.size();
@@ -239,12 +249,12 @@ public class MyModel extends Observable implements IModel {
                                 mazeSolutionArr[1][i] = ((MazeState) (mazeSolutionSteps.get(i))).getCol();
                             }
                         }
-                        else if (x == "hint"){
+                       /* else if (x == "hint"){
                             int i = 1;
                             mazeSolutionArr[0][i] = ((MazeState) (mazeSolutionSteps.get(i))).getRow();
                             mazeSolutionArr[1][i] = ((MazeState) (mazeSolutionSteps.get(i))).getCol();
 
-                        }
+                        }*/
 
                         setChanged();
                         notifyObservers();

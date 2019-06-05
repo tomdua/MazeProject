@@ -1,9 +1,11 @@
 package Model;
 
+import View.MazeDisplay;
 import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 
@@ -12,6 +14,8 @@ public interface IModel {
     int[][] generateMaze(int width, int height);
 
     void moveCharacter(KeyCode movement);
+
+    void moveCharacter(MouseEvent movement, MazeDisplay md);
 
     int[][] getMaze();
 

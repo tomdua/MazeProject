@@ -1,8 +1,6 @@
 package View;
 
 import algorithms.mazeGenerators.Position;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -39,10 +37,6 @@ public class MazeDisplay extends Canvas {
 
     public void redraw() {
         if (maze != null) {
-//            if (this.getScene()!=null) {
-//                this.setWidth(this.getScene().getHeight()-136);
-//                this.setHeight(this.getScene().getWidth());
-//            }
             double canvasHeight = getWidth();
             double canvasWidth = getHeight();
             double cellHeight = canvasHeight / maze[0].length;
@@ -59,8 +53,6 @@ public class MazeDisplay extends Canvas {
                         if (maze[i][j] == 1) {
                             graphicsContext2D.drawImage(wallImage, j * cellHeight, i * cellWidth, cellHeight, cellWidth);
                         }
-//                        graphicsContext2D.setFill(Color.WHITE);
-//                        graphicsContext2D.fillRect(numOfMaze,j,cellHeight,cellWidth);
                     }
                 }
 
@@ -70,7 +62,6 @@ public class MazeDisplay extends Canvas {
 
                 //Draw solution
                 if (isSolved) {
-                    //Image SolutionImage = new Image(new FileInputStream("resources/images/eat.png"));
                     Image SolutionImage = new Image(new FileInputStream("resources/images/clue.png"));
                     for (int i = 0; i < solved[0].length - 1; i++) {
                         int x = solved[0][i];
@@ -79,11 +70,6 @@ public class MazeDisplay extends Canvas {
                     }
                 }
 
-
-
-
-                //gc.setFill(Color.RED);
-                //gc.fillOval(characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
                 //draw start point
                 Image StartPoint = new Image(new FileInputStream("resources/images/LannisterHome.png"));
                 graphicsContext2D.drawImage(StartPoint, 0, 0, cellHeight, cellWidth);
@@ -98,11 +84,11 @@ public class MazeDisplay extends Canvas {
         }
     }
 
-    //region Properties
+  /*  //region Properties
     private StringProperty ImageFileNameWall = new SimpleStringProperty();
     private StringProperty ImageFileNameCharacter = new SimpleStringProperty();
-
-    public String getImageFileNameWall() {
+*/
+/*    public String getImageFileNameWall() {
         return ImageFileNameWall.get();
     }
 
@@ -116,7 +102,7 @@ public class MazeDisplay extends Canvas {
 
     public void setImageFileNameCharacter(String imageFileNameCharacter) {
         this.ImageFileNameCharacter.set(imageFileNameCharacter);
-    }
+    }*/
 
     public void isSolved(boolean solved) {
         this.isSolved = solved;
@@ -125,6 +111,5 @@ public class MazeDisplay extends Canvas {
     public void setGoalPosition(Position goalPosition) {
         this.endPosition = goalPosition;
     }
-    //endregion
 
 }

@@ -18,7 +18,9 @@ import java.util.Optional;
 
 public class Main extends Application {
 
-    //TODO add javadocs
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -26,13 +28,12 @@ public class Main extends Application {
         MyViewModel viewModel = new MyViewModel(model);
         model.addObserver(viewModel);
         //--------------
-        primaryStage.setTitle("Itzik's and Raanan's Maze!");
+        primaryStage.setTitle("Game Of Thrones Maze");
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent root = fxmlLoader.load(getClass().getResource("MyView.fxml").openStream());
 
         Scene scene = new Scene(root, 600, 500);
         scene.getStylesheets().add("Main.css");
-//        scene.getStylesheets().add(getClass().getResource("ViewStyle.css").toExternalForm());
 
         primaryStage.getIcons().add(new Image("file:resources/images/icon.png"));
         primaryStage.setMinHeight(500);
@@ -40,7 +41,6 @@ public class Main extends Application {
 
         //--------------
         MyViewController view = fxmlLoader.getController();
-//        primaryStage.setFullScreen(true);
         view.setResizeEvent(scene);
         view.setViewModel(viewModel);
         viewModel.addObserver(view);
@@ -61,14 +61,11 @@ public class Main extends Application {
                     primaryStage.close();
                     Platform.exit();
                 } else {
-                    // ... user chose CANCEL or closed the dialog
                     windowEvent.consume();
                 }
             }
         });
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+
 }

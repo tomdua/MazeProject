@@ -1,6 +1,5 @@
 package View;
 
-import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
@@ -9,11 +8,6 @@ import java.util.ResourceBundle;
 
 public class Help implements Initializable {
     public javafx.scene.control.Button exit;
-    public javafx.scene.control.Label text;
-
-    public void close() {
-        Platform.exit();
-    }
 
     public void closew() {
         Stage s = (Stage) exit.getScene().getWindow();

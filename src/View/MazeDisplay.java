@@ -16,8 +16,9 @@ public class MazeDisplay extends Canvas {
     private Position endPosition;
     private int[][] solved;
     private boolean isSolved;
-    private String characterPath="resources/images/JonSnow.png";
-    private String homePath="resources/images/JonSnow.png";
+    private String homePath = "";
+    private String characterPath = "" ;
+    private String wallPath= "";
 
     public void setMaze(int[][] maze) {
         this.maze = maze;
@@ -51,6 +52,10 @@ public class MazeDisplay extends Canvas {
         this.homePath = homePath;
     }
 
+    public String getWallPath() { return wallPath; }
+
+    public void setWallPath(String wallPath) { this.wallPath = wallPath; }
+
     public void setGoalPosition(Position goalPosition) {
         this.endPosition = goalPosition;
     }
@@ -82,7 +87,13 @@ public class MazeDisplay extends Canvas {
             try {
                 GraphicsContext graphicsContext2D = getGraphicsContext2D();
                 graphicsContext2D.clearRect(0, 0, getWidth(), getHeight()); //Clears the canvas
-                Image wallImage = new Image(new FileInputStream("resources/images/wall.jpg"));
+                Image StartPoint = new Image(new FileInputStream(getHomePath()));
+                graphicsContext2D.drawImage(StartPoint, 0, 0, cellHeight, cellWidth);
+                Image characterImage = new Image(new FileInputStream(getCharacterPath()));
+                graphicsContext2D.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
+                Image wallImage = new Image(new FileInputStream(getWallPath()));
+                Image endPos = new Image(new FileInputStream("resources/images/end.png"));
+                graphicsContext2D.drawImage(endPos, endPosition.getColumnIndex() * cellHeight, endPosition.getRowIndex() * cellWidth, cellHeight, cellWidth);
 
                 //Draw Maze
                 for (int i = 0; i < maze.length; i++) {
@@ -92,12 +103,6 @@ public class MazeDisplay extends Canvas {
                         }
                     }
                 }
-
-                //draw end point
-                Image endPos = new Image(new FileInputStream("resources/images/end.png"));
-                graphicsContext2D.drawImage(endPos, endPosition.getColumnIndex() * cellHeight, endPosition.getRowIndex() * cellWidth, cellHeight, cellWidth);
-
-                //Draw solution
                 if (isSolved) {
                     Image SolutionImage = new Image(new FileInputStream("resources/images/clue.png"));
                     for (int i = 0; i < solved[0].length - 1; i++) {
@@ -106,13 +111,6 @@ public class MazeDisplay extends Canvas {
                         graphicsContext2D.drawImage(SolutionImage, y * cellHeight, x * cellWidth, cellHeight, cellWidth);
                     }
                 }
-
-                //draw start point
-                Image StartPoint = new Image(new FileInputStream(getHomePath()));
-                graphicsContext2D.drawImage(StartPoint, 0, 0, cellHeight, cellWidth);
-                //Draw Character
-                Image characterImage = new Image(new FileInputStream(getCharacterPath()));
-                graphicsContext2D.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
             } catch (FileNotFoundException e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText(String.format("Image doesn't exist: %s", e.getMessage()));
@@ -120,17 +118,20 @@ public class MazeDisplay extends Canvas {
             }
         }
     }
-    
+
     public void changeImages(String character) {
         if (character.equals("JonSnow")) {
             setCharacterPath("resources/images/JonSnow.png");
-            setHomePath("resources/images/JonSnow.png");
+            setHomePath("resources/images/JonSnowHome.png");
+            setWallPath("resources/images/wallJonSnow.jpg");
         } else if (character.equals(("Daenerys"))) {
             setCharacterPath("resources/images/Daenerys.png");
-            setHomePath("resources/images/Daenerys.png");
+            setHomePath("resources/images/DaenerysHome.png");
+            setWallPath("resources/images/wallDaenerys.jpg");
         } else if (character.equals(("CerseiLannister"))) {
             setCharacterPath("resources/images/CerseiLannister.png");
-            setHomePath("resources/images/erseiLannister.png");
+            setHomePath("resources/images/LannisterHome.png");
+            setWallPath("resources/images/wallCerseiLannister.jpg");
         }
     }
 }

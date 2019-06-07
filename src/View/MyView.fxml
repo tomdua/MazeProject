@@ -86,16 +86,16 @@
                     <children>
                         <Button fx:id="btn_SolveMaze" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#solveMaze" prefHeight="25.0" prefWidth="118.0" text="Solve Maze" visible="false" />
                         <Button fx:id="btn_GenerateMaze" defaultButton="true" layoutX="4.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateMaze" prefHeight="25.0" prefWidth="118.0" text="Generate" />
-                        <ChoiceBox layoutX="10.0" layoutY="199.0" prefHeight="25.0" prefWidth="118.0">
+                        <ChoiceBox fx:id="cbBCharacter" layoutX="5.0" layoutY="207.0" onAction="#cbCharacter" prefHeight="25.0" prefWidth="118.0">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="Jon Snow" />
-                                    <String fx:value="Cersei Lannister" />
-                                    <String fx:value="Daenerys Targaryen" />
+                                    <String fx:value="JonSnow" />
+                                    <String fx:value="CerseiLannister" />
+                                    <String fx:value="Daenerys" />
                                 </FXCollections>
                             </items>
                         </ChoiceBox>
-                        <Text layoutX="14.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change Character" wrappingWidth="96.59765625" />
+                        <Text layoutX="4.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change Character" wrappingWidth="96.59765625" />
                         <Line endX="-59.0" layoutX="176.0" layoutY="135.0" startX="-70.0" startY="-9.0" />
                         <Line endX="-59.0" layoutX="177.0" layoutY="136.0" startX="-96.0" />
                         <Line endX="-59.0" layoutX="178.0" layoutY="136.0" startX="-72.0" startY="10.0" />

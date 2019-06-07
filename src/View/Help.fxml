@@ -11,39 +11,17 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="View.Help">
+<AnchorPane minHeight="282.0" onMouseClicked="#closew" prefHeight="282.0" prefWidth="429.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="View.Help">
   <children>
-    <TabPane prefHeight="234.0" prefWidth="433.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <tabs>
-        <Tab text="Game Instruction">
-          <content>
-            <AnchorPane prefHeight="205.0" prefWidth="523.0">
-              <children>
-                <Button fx:id="Exit" layoutX="171.0" layoutY="151.0" mnemonicParsing="false" onAction="#closew" text="Close Window" />
-                <Label prefHeight="163.0" prefWidth="425.0" text="First you have to choose the character!&#10;Now it's possible to start :)&#10;You start at a starting point, and you have to reach the end point as quickly as possible.&#10;Watch out for the walls!&#10;If you get stuck and do not know where to go,&#10; you can use the Solve maze button" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                  <font>
-                    <Font size="15.0" />
-                  </font>
-                </Label>
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="Controllers">
-          <content>
-            <AnchorPane>
-              <children>
-                <Label layoutX="3.0" layoutY="5.0" prefHeight="159.0" prefWidth="427.0" text="Game Controllers&#10;Up = 8 / W          &#10;Down = 2 / S           &#10;Left = 4  / A             &#10;Right = 6  / D          ">
-                  <font>
-                    <Font name="Book Antiqua Bold" size="17.0" />
-                  </font>
-                </Label>
-                <Button fx:id="exit" layoutX="171.0" layoutY="166.0" mnemonicParsing="false" onAction="#closew" text="Close Window" />
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-      </tabs>
-    </TabPane>
+    <Pane layoutX="217.0" layoutY="117.0" prefHeight="200.0" prefWidth="200.0">
+      <children>
+        <Button id="Exit" fx:id="exit" blendMode="DIFFERENCE" layoutX="35.0" layoutY="124.0" mnemonicParsing="false" onAction="#closew" text="Close Window" />
+      </children>
+    </Pane>
+    <Label blendMode="RED" prefHeight="227.0" prefWidth="425.0" text="First you have to choose the character!&#10;Now it's possible to start :)&#10;You start at a starting point, and you have to reach the end point as quickly as possible.&#10;Watch out for the walls!&#10;If you get stuck and do not know where to go,&#10; you can use the Solve maze button" AnchorPane.bottomAnchor="76.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="14.0">
+      <font>
+        <Font size="15.0" />
+      </font>
+    </Label>
   </children>
 </AnchorPane>

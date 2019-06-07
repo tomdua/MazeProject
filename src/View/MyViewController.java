@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -54,6 +55,8 @@ public class MyViewController implements Observer, IView {
     public javafx.scene.control.Button btn_GenerateMaze;
     public javafx.scene.control.Button btn_SolveMaze;
     public javafx.scene.control.Button btn_StopMusic;
+    public ChoiceBox cbBCharacter;
+
     int mazeNum = 0;
     boolean showOnce = false;
     boolean songOnce = true;
@@ -63,6 +66,7 @@ public class MyViewController implements Observer, IView {
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
         bindProperties(viewModel);
+       btn_GenerateMaze.setVisible(false);
     }
 
     private void bindProperties(MyViewModel viewModel) {
@@ -82,9 +86,11 @@ public class MyViewController implements Observer, IView {
             // btn_GenerateMaze.setDisable(false);
             if (viewModel.gameFinish() && !showOnce) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Game Done");
+                alert.setContentText("Well Done,\n"+
+                                    "You'r the king of the seven kingdoms");
                 Music(1);
                 alert.show();
+                btn_GenerateMaze.setDisable(false);
                 showOnce = true;
             }
             mazeDisplay.redraw();
@@ -360,4 +366,15 @@ public class MyViewController implements Observer, IView {
     public void scroll(ScrollEvent event) {
         viewModel.scroll(event, mazeDisplay);
     }
+
+    public void cbCharacter(ActionEvent actionEvent)  {
+        if (cbBCharacter.getValue().equals("JonSnow"))
+            mazeDisplay.changeImages("JonSnow");
+        else if(cbBCharacter.getValue().equals("Daenerys"))
+            mazeDisplay.changeImages("Daenerys");
+        else
+            mazeDisplay.changeImages("CerseiLannister");
+        btn_GenerateMaze.setVisible(true);
+    }
+
 }

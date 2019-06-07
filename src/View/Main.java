@@ -65,7 +65,9 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent windowEvent) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setContentText("are you sure you want to leave the game?\nthis is a very fun game!");
+                alert.setContentText("Are you sure you want to leave the game?\n"
+                                    +"Don't miss the chance to be the\n"
+                                    +"king of the seven kingdom!");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     primaryStage.close();
@@ -76,6 +78,4 @@ public class Main extends Application {
             }
         });
     }
-
-
 }

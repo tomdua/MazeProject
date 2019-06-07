@@ -16,6 +16,8 @@ public class MazeDisplay extends Canvas {
     private Position endPosition;
     private int[][] solved;
     private boolean isSolved;
+    private String characterPath="resources/images/JonSnow.png";
+    private String homePath="resources/images/JonSnow.png";
 
     public void setMaze(int[][] maze) {
         this.maze = maze;
@@ -25,8 +27,7 @@ public class MazeDisplay extends Canvas {
         return maze;
     }
 
-
-    public void endposition(algorithms.mazeGenerators.Position end) {
+    public void endPosition(algorithms.mazeGenerators.Position end) {
         endPosition = end;
     }
 
@@ -34,6 +35,25 @@ public class MazeDisplay extends Canvas {
         solved = answer;
     }
 
+    public String getCharacterPath() {
+        return characterPath;
+    }
+
+    public void setCharacterPath(String characterPath) {
+        this.characterPath = characterPath;
+    }
+
+    public String getHomePath() {
+        return homePath;
+    }
+
+    public void setHomePath(String homePath) {
+        this.homePath = homePath;
+    }
+
+    public void setGoalPosition(Position goalPosition) {
+        this.endPosition = goalPosition;
+    }
 
     public void setCharacterPosition(int row, int column) {
         characterPositionRow = row;
@@ -46,6 +66,10 @@ public class MazeDisplay extends Canvas {
 
     public int getCharacterPositionColumn() {
         return characterPositionColumn;
+    }
+
+    public void isSolved(boolean solved) {
+        this.isSolved = solved;
     }
 
     public void redraw() {
@@ -84,10 +108,10 @@ public class MazeDisplay extends Canvas {
                 }
 
                 //draw start point
-                Image StartPoint = new Image(new FileInputStream("resources/images/LannisterHome.png"));
+                Image StartPoint = new Image(new FileInputStream(getHomePath()));
                 graphicsContext2D.drawImage(StartPoint, 0, 0, cellHeight, cellWidth);
                 //Draw Character
-                Image characterImage = new Image(new FileInputStream("resources/images/CerseiLannister.png"));
+                Image characterImage = new Image(new FileInputStream(getCharacterPath()));
                 graphicsContext2D.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
             } catch (FileNotFoundException e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -96,33 +120,17 @@ public class MazeDisplay extends Canvas {
             }
         }
     }
-
-  /*  //region Properties
-    private StringProperty ImageFileNameWall = new SimpleStringProperty();
-    private StringProperty ImageFileNameCharacter = new SimpleStringProperty();
-*/
-/*    public String getImageFileNameWall() {
-        return ImageFileNameWall.get();
+    
+    public void changeImages(String character) {
+        if (character.equals("JonSnow")) {
+            setCharacterPath("resources/images/JonSnow.png");
+            setHomePath("resources/images/JonSnow.png");
+        } else if (character.equals(("Daenerys"))) {
+            setCharacterPath("resources/images/Daenerys.png");
+            setHomePath("resources/images/Daenerys.png");
+        } else if (character.equals(("CerseiLannister"))) {
+            setCharacterPath("resources/images/CerseiLannister.png");
+            setHomePath("resources/images/erseiLannister.png");
+        }
     }
-
-    public void setImageFileNameWall(String imageFileNameWall) {
-        this.ImageFileNameWall.set(imageFileNameWall);
-    }
-
-    public String getImageFileNameCharacter() {
-        return ImageFileNameCharacter.get();
-    }
-
-    public void setImageFileNameCharacter(String imageFileNameCharacter) {
-        this.ImageFileNameCharacter.set(imageFileNameCharacter);
-    }*/
-
-    public void isSolved(boolean solved) {
-        this.isSolved = solved;
-    }
-
-    public void setGoalPosition(Position goalPosition) {
-        this.endPosition = goalPosition;
-    }
-
 }

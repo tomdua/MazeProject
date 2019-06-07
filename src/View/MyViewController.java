@@ -36,35 +36,29 @@ import java.util.Observer;
 
 public class MyViewController implements Observer, IView {
 
+    private static final int startTime = 10;
+    private static final String startLives = "* * *";
     @FXML
     private static MyViewModel viewModel = new MyViewModel(new MyModel());
+    private final StringProperty lives = new SimpleStringProperty(startLives);
+    private final IntegerProperty timeSeconds = new SimpleIntegerProperty(startTime);
     public MazeDisplay mazeDisplay = new MazeDisplay();
-
-    private static final int startTime=10;
-    private static final String startLives="* * *";
-    private final StringProperty lives=new SimpleStringProperty(startLives);
-    private final IntegerProperty timeSeconds=new SimpleIntegerProperty(startTime);
-    private Timeline time;
-    private MediaPlayer mediaPlayer;
-    int mazeNum = 0;
-    boolean showOnce = false;
-    boolean songOnce = true;
     public StringProperty characterPositionRow = new SimpleStringProperty();
     public StringProperty characterPositionColumn = new SimpleStringProperty();
-
     public javafx.scene.control.TextField txt_row;
     public javafx.scene.control.TextField txt_col;
-
     public javafx.scene.control.Label lbl_rowsNum;
     public javafx.scene.control.Label lbl_columnsNum;
     public javafx.scene.control.Label lbl_timeLeft;
     public javafx.scene.control.Label lbl_livesLeft;
-
     public javafx.scene.control.Button btn_GenerateMaze;
     public javafx.scene.control.Button btn_SolveMaze;
     public javafx.scene.control.Button btn_StopMusic;
-
-
+    int mazeNum = 0;
+    boolean showOnce = false;
+    boolean songOnce = true;
+    private Timeline time;
+    private MediaPlayer mediaPlayer;
 
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
@@ -85,8 +79,7 @@ public class MyViewController implements Observer, IView {
             mazeDisplay.setCharacterPosition(viewModel.getCharacterPositionRow(), viewModel.getCharacterPositionColumn());
             mazeDisplay.setGoalPosition(viewModel.getEndPosition());
             displayMaze(viewModel.getMaze());
-            btn_GenerateMaze.setDisable(false);
-
+            // btn_GenerateMaze.setDisable(false);
             if (viewModel.gameFinish() && !showOnce) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Game Done");
@@ -103,71 +96,64 @@ public class MyViewController implements Observer, IView {
         int characterPositionRow = viewModel.getCharacterPositionRow();
         int characterPositionColumn = viewModel.getCharacterPositionColumn();
         mazeDisplay.setCharacterPosition(characterPositionRow, characterPositionColumn);
-        mazeDisplay.endposition(viewModel.getEndPosition());
+        mazeDisplay.endPosition(viewModel.getEndPosition());
         mazeDisplay.Solved(viewModel.getMazeSolutionArr());
         mazeDisplay.isSolved(viewModel.isSolved());
         this.characterPositionRow.set(characterPositionRow + "");
         this.characterPositionColumn.set(characterPositionColumn + "");
         if (viewModel.isSolved())
             mazeDisplay.redraw();
+        //  btn_GenerateMaze.setDisable(false);
     }
 
     public void generateMaze() {
         if (songOnce == true)
             Music(0);
         btn_StopMusic.setVisible(true);
-        if(time!=null)
+        btn_GenerateMaze.setDisable(true);
+        lives.setValue("* * *");
+        if (time != null)
             time.stop();
         Timer();
         showOnce = false;
-        int height;
-        int width;
+        int height, width;
         try {
             height = Integer.valueOf(txt_row.getText());
+            if (height <= 0) {
+                height = 10;
+                txt_row.setText("10");
+            }
         } catch (Exception e) {
             height = 10;
+            txt_row.setText("10");
         }
         try {
             width = Integer.valueOf(txt_col.getText());
+            if (width <= 0) {
+                width = 10;
+                txt_col.setText("10");
+            }
         } catch (Exception e) {
             width = 10;
+            txt_col.setText("10");
         }
         int[][] temp = viewModel.generateMaze(height, width);
         mazeDisplay.setMaze(temp);
-        mazeDisplay.endposition(viewModel.getEndPosition());
+        mazeDisplay.endPosition(viewModel.getEndPosition());
         btn_SolveMaze.setVisible(true);
         displayMaze(temp);
     }
-
-    private void showAlert(String alertMessage) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(alertMessage);
-        alert.show();
-    }
-
 
     public void KeyPressed(KeyEvent keyEvent) {
         viewModel.moveCharacter(keyEvent.getCode());
         keyEvent.consume();
     }
 
-    //region String Property for Binding
 
-    public String getCharacterPositionRow() {
-        return characterPositionRow.get();
+    public void mouseClicked(MouseEvent mouseEvent) {
+        this.mazeDisplay.requestFocus();
     }
 
-    public StringProperty characterPositionRowProperty() {
-        return characterPositionRow;
-    }
-
-    public String getCharacterPositionColumn() {
-        return characterPositionColumn.get();
-    }
-
-    public StringProperty characterPositionColumnProperty() {
-        return characterPositionColumn;
-    }
 
     public void setResizeEvent(Scene scene) {
         scene.widthProperty().addListener(new ChangeListener<Number>() {
@@ -184,11 +170,9 @@ public class MyViewController implements Observer, IView {
         });
     }
 
-
     public void solveMaze(ActionEvent actionEvent) {
         viewModel.getSolution(this.viewModel, this.viewModel.getCharacterPositionRow(), this.viewModel.getCharacterPositionColumn(), "solve");
     }
-
 
 
     public void exit(ActionEvent actionEvent) {
@@ -226,7 +210,6 @@ public class MyViewController implements Observer, IView {
             System.out.println("Error Help.fxml not found");
         }
     }
-
 
 
     public void Option(ActionEvent actionEvent) {
@@ -270,7 +253,7 @@ public class MyViewController implements Observer, IView {
         });
         if (file != null && file.exists() && !file.isDirectory()) {
             viewModel.load(file);
-            if (songOnce ==true)
+            if (songOnce == true)
                 Music(0);
             mazeDisplay.redraw();
         }
@@ -284,11 +267,11 @@ public class MyViewController implements Observer, IView {
         if (x == 0) {
             songOnce = false;
             path = "resources\\start.mp3";
-        }
-        else {
-            songOnce =true;
+        } else {
+            songOnce = true;
             path = "resources\\end.mp3";
-        }Media temp = new Media(Paths.get(path).toUri().toString());
+        }
+        Media temp = new Media(Paths.get(path).toUri().toString());
         mediaPlayer = new MediaPlayer(temp);
         mediaPlayer.play();
     }
@@ -296,28 +279,45 @@ public class MyViewController implements Observer, IView {
 
     public void updateTime() {
         int seconds = timeSeconds.get();
-        timeSeconds.set(seconds-1);
-        if(timeSeconds.get()<=0) {
-            mazeDisplay.setCharacterPosition(5,5);
-            showAlert("Time Is Over, Try again");
+        timeSeconds.set(seconds - 1);
+        if (timeSeconds.get() <= 0) {
+            viewModel.setCharacterPositionColumn(0);
+            viewModel.setCharacterPositionRow(0);
+            mazeDisplay.setCharacterPosition(0, 0);
+            mazeDisplay.redraw();
             time.stop();
             updateLives();
             timeSeconds.set(startTime);
-
+            if (!lives.get().equals("")) {
+                //  Stage SettingsStage = (Stage) btnSignOut.getScene().getWindow();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Time is done,\n" +
+                        "try again");
+                alert.show();
+                //    ButtonType result = alert.getResult();
+                // if (result.equals(ButtonType.OK)) {
+                // if(viewModel.getCharacterPositionRow()!=0 || viewModel.getCharacterPositionColumn()!=0)
+                Timer();
+                // }
+            }
         }
     }
 
 
     public void updateLives() {
         String livesLeft = lives.get();
-        if(livesLeft.equals("* * *"))
+        if (livesLeft.equals("* * *"))
             lives.set("* *");
-        else if(livesLeft.equals("* *"))
+        else if (livesLeft.equals("* *"))
             lives.set("*");
-        else if(livesLeft.equals("*")) {
-            showAlert("You Lose!\n" +
-                    "Try again next time");
+        else if (livesLeft.equals("*")) {
+            lives.set("");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Time is done,\n" +
+                    "try again");
+            alert.show();
             time.stop();
+            btn_GenerateMaze.setDisable(false);
         }
     }
 
@@ -357,11 +357,7 @@ public class MyViewController implements Observer, IView {
         }
     }
 
-
     public void scroll(ScrollEvent event) {
         viewModel.scroll(event, mazeDisplay);
     }
-
-
-
 }

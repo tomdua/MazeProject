@@ -24,12 +24,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-/*
-responsible for all the function part
- */
 
 public class MyModel extends Observable implements IModel {
     private int[][] maze;
@@ -42,7 +37,7 @@ public class MyModel extends Observable implements IModel {
     private int[][] mazeSolutionArr;
     private Server serverMazeGenerator;
     private Server serverSolveMaze;
-    private ExecutorService threadPool = Executors.newCachedThreadPool();
+    //private ExecutorService threadPool = Executors.newCachedThreadPool();
 
     public int getCharacterPositionRow() {
         return characterPositionRow;
@@ -52,9 +47,12 @@ public class MyModel extends Observable implements IModel {
         this.characterPositionRow = row;
     }
 
-
     public int getCharacterPositionColumn() {
         return characterPositionColumn;
+    }
+
+    public void setCharacterPositionCol(int col) {
+        this.characterPositionColumn = col;
     }
 
     public Position getEndPosition() {
@@ -117,6 +115,49 @@ public class MyModel extends Observable implements IModel {
         setChanged();
         notifyObservers();
         return maze;
+    }
+
+
+    @Override
+    public void generateSolution(MyViewModel m, int charRow, int charCol, String x) {
+        serverSolveMaze = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
+        serverSolveMaze.start();
+        try {
+            Client client = new Client(InetAddress.getLocalHost(), 5401, new IClientStrategy() {
+                @Override
+                public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
+                    try {
+                        ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
+                        ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
+                        toServer.flush();
+                        Maze maze = Original;
+                        maze.setStartPosition(new Position(charRow,charCol));
+                        toServer.writeObject(maze); //send maze to server
+                        toServer.flush();
+                        Solution mazeSolution = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor)from server
+                        //Print Maze Solution retrieved from the server
+                        solved = true;
+                        ArrayList<AState> mazeSolutionSteps = mazeSolution.getSolutionPath();
+                        int sizeOfSolution = mazeSolutionSteps.size();
+                        mazeSolutionArr = new int[2][sizeOfSolution];
+                        if(x == "solve") {
+                            for (int i = 0; i < mazeSolutionSteps.size(); i++) {
+                                mazeSolutionArr[0][i] = ((MazeState) (mazeSolutionSteps.get(i))).getRow();
+                                mazeSolutionArr[1][i] = ((MazeState) (mazeSolutionSteps.get(i))).getCol();
+                            }
+                        }
+                        setChanged();
+                        notifyObservers();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            client.communicateWithServer();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        serverSolveMaze.stop();
     }
 
     private boolean isNotLegalMove(int x, int y) {
@@ -228,10 +269,6 @@ public class MyModel extends Observable implements IModel {
         this.endPosition = goalPosition;
     }
 
-    public Maze getOriginal() {
-        return Original;
-    }
-
     @Override
     public void setMaze(int[][] maze) {
         this.maze = maze;
@@ -246,61 +283,8 @@ public class MyModel extends Observable implements IModel {
         return this.solved;
     }
 
-    @Override
-    public void generateSolution(MyViewModel m, int charRow, int charCol, String x) {
-        serverSolveMaze = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
-        serverSolveMaze.start();
-        try {
-            Client client = new Client(InetAddress.getLocalHost(), 5401, new IClientStrategy() {
-                @Override
-                public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
-                    try {
-                        ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
-                        ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
-                        toServer.flush();
-                        Maze maze = Original;
-                        maze.setStartPosition(new Position(charRow,charCol));
-                        toServer.writeObject(maze); //send maze to server
-                        toServer.flush();
-                        Solution mazeSolution = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor)from server
-                        //Print Maze Solution retrieved from the server
-                            solved = true;
-                        ArrayList<AState> mazeSolutionSteps = mazeSolution.getSolutionPath();
-                        int sizeOfSolution = mazeSolutionSteps.size();
-                        mazeSolutionArr = new int[2][sizeOfSolution];
-                        if(x == "solve") {
-                            for (int i = 0; i < mazeSolutionSteps.size(); i++) {
-                                mazeSolutionArr[0][i] = ((MazeState) (mazeSolutionSteps.get(i))).getRow();
-                                mazeSolutionArr[1][i] = ((MazeState) (mazeSolutionSteps.get(i))).getCol();
-                            }
-                        }
-                       /* else if (x == "hint"){
-                            int i = 1;
-                            mazeSolutionArr[0][i] = ((MazeState) (mazeSolutionSteps.get(i))).getRow();
-                            mazeSolutionArr[1][i] = ((MazeState) (mazeSolutionSteps.get(i))).getCol();
-
-                        }*/
-
-                        setChanged();
-                        notifyObservers();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            client.communicateWithServer();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        serverSolveMaze.stop();
-    }
-
     public int[][] getMazeSolutionArr() {
         return mazeSolutionArr;
-    }
-
-    public void setCharacterPositionCol(int col) {
-        this.characterPositionColumn = col;
     }
 
     public void save(File file)
@@ -308,10 +292,8 @@ public class MyModel extends Observable implements IModel {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             ObjectOutputStream os = new ObjectOutputStream(fileOutputStream);
-            //TODO CHANGED 2 lines
             solved = false;
             Original.setStartPosition(new Position(characterPositionRow,characterPositionColumn));
-            //myMaze.setM_startPosition(new Position(characterRow, characterColumn));
             os.writeObject(Original);
             os.flush();
             os.close();
@@ -327,7 +309,6 @@ public class MyModel extends Observable implements IModel {
             ObjectInputStream os = new ObjectInputStream(fileInputStream);
             Maze temp = (Maze)os.readObject();
             setMazeOriginal(temp);
-            //TODO CHANGED 3 LINES
             setGoalPosition(temp.getGoalPosition());
             setCharacterPositionRow(temp.getStartPosition().getRowIndex());
             setCharacterPositionCol(temp.getStartPosition().getColumnIndex());

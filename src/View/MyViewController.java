@@ -319,8 +319,8 @@ public class MyViewController implements Observer, IView {
         else if (livesLeft.equals("*")) {
             lives.set("");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Time is done,\n" +
-                    "try again");
+            alert.setContentText("You lose the crown,\n" +
+                    "try again next time");
             alert.show();
             time.stop();
             btn_GenerateMaze.setDisable(false);

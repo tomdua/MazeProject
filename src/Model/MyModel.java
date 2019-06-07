@@ -47,9 +47,7 @@ public class MyModel extends Observable implements IModel {
         this.characterPositionRow = row;
     }
 
-    public int getCharacterPositionColumn() {
-        return characterPositionColumn;
-    }
+    public int getCharacterPositionColumn() { return characterPositionColumn; }
 
     public void setCharacterPositionCol(int col) {
         this.characterPositionColumn = col;
@@ -233,17 +231,20 @@ public class MyModel extends Observable implements IModel {
 
     @Override
     public void moveCharacter(MouseEvent movement, MazeDisplay md) {
-        int mouseY = (int) Math.floor(movement.getSceneY() / (md.getWidth()/md.getMaze()[0].length));
-        int mouseX = (int) Math.floor(movement.getSceneX() / (md.getHeight()/md.getMaze().length));
-        if (mouseY < md.getCharacterPositionRaw())
-            moveCharacter(KeyCode.NUMPAD8);
-        if (mouseY > md.getCharacterPositionRaw())
-            moveCharacter(KeyCode.NUMPAD2);
-        if (mouseX < md.getCharacterPositionColumn())
-            moveCharacter(KeyCode.NUMPAD4);
-        if (mouseX > md.getCharacterPositionColumn())
-            moveCharacter(KeyCode.NUMPAD6);
+        if (md.getMaze() != null) {
+            int mouseY = (int) Math.floor(movement.getSceneY() / (md.getWidth() / md.getMaze()[0].length));
+            int mouseX = (int) Math.floor(movement.getSceneX() / (md.getHeight() / md.getMaze().length));
+            if (mouseY < md.getCharacterPositionRaw())
+                moveCharacter(KeyCode.NUMPAD8);
+            if (mouseY > md.getCharacterPositionRaw())
+                moveCharacter(KeyCode.NUMPAD2);
+            if (mouseX < md.getCharacterPositionColumn())
+                moveCharacter(KeyCode.NUMPAD4);
+            if (mouseX > md.getCharacterPositionColumn())
+                moveCharacter(KeyCode.NUMPAD6);
+        }
     }
+
 
     public void scroll(ScrollEvent event, MazeDisplay mazeDisplay) {
         Double direction = event.getDeltaY();

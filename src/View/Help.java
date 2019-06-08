@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 public class Help implements Initializable {
     public javafx.scene.control.Button exit;
 
-    public void closeWindow() {
+    public void closew() {
         Stage s = (Stage) exit.getScene().getWindow();
         s.close();
     }

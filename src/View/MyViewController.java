@@ -37,7 +37,7 @@ import java.util.Observer;
 
 public class MyViewController implements Observer, IView {
 
-    private static final int startTime = 120;
+    private static final int startTime = 3;
     private static final String startLives = "* * *";
     @FXML
     private static MyViewModel viewModel = new MyViewModel(new MyModel());

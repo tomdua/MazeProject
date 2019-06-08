@@ -12,7 +12,7 @@ public class About implements Initializable {
     public javafx.scene.image.ImageView NearExit;
 
 
-    public void closew() {
+    public void closeWindow() {
         Stage s = (Stage) exit.getScene().getWindow();
         s.close();
     }
@@ -21,19 +21,4 @@ public class About implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    /*    text.setWrapText(true);
-        text.setText("Hello and welcome to Itzik and Raanan's project.\n" +
-                "Here you will see our project we made in java.\n" +
-                "This is a game of maze and you need to get the character " +
-                "to the end of the maze where the flag is.\n" +
-                "Hope you enjoy our game! good luck");
-        Image SmallImageNearExit = null;
-        try {
-            SmallImageNearExit = new Image(new File("resources/images/exit.png").toURI().toURL().toExternalForm());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        NearExit.setImage(SmallImageNearExit);
-
-    }*/
 }

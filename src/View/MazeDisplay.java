@@ -17,15 +17,15 @@ public class MazeDisplay extends Canvas {
     private int[][] solved;
     private boolean isSolved;
     private String homePath = "";
-    private String characterPath = "" ;
-    private String wallPath= "";
-
-    public void setMaze(int[][] maze) {
-        this.maze = maze;
-    }
+    private String characterPath = "";
+    private String wallPath = "";
 
     public int[][] getMaze() {
         return maze;
+    }
+
+    public void setMaze(int[][] maze) {
+        this.maze = maze;
     }
 
     public void endPosition(algorithms.mazeGenerators.Position end) {
@@ -52,9 +52,13 @@ public class MazeDisplay extends Canvas {
         this.homePath = homePath;
     }
 
-    public String getWallPath() { return wallPath; }
+    public String getWallPath() {
+        return wallPath;
+    }
 
-    public void setWallPath(String wallPath) { this.wallPath = wallPath; }
+    public void setWallPath(String wallPath) {
+        this.wallPath = wallPath;
+    }
 
     public void setGoalPosition(Position goalPosition) {
         this.endPosition = goalPosition;
@@ -66,7 +70,7 @@ public class MazeDisplay extends Canvas {
     }
 
     public int getCharacterPositionRaw() {
-       return characterPositionRow;
+        return characterPositionRow;
     }
 
     public int getCharacterPositionColumn() {
@@ -89,8 +93,6 @@ public class MazeDisplay extends Canvas {
                 graphicsContext2D.clearRect(0, 0, getWidth(), getHeight()); //Clears the canvas
                 Image StartPoint = new Image(new FileInputStream(getHomePath()));
                 graphicsContext2D.drawImage(StartPoint, 0, 0, cellHeight, cellWidth);
-                Image characterImage = new Image(new FileInputStream(getCharacterPath()));
-                graphicsContext2D.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
                 Image wallImage = new Image(new FileInputStream(getWallPath()));
                 Image endPos = new Image(new FileInputStream("resources/images/end.png"));
                 graphicsContext2D.drawImage(endPos, endPosition.getColumnIndex() * cellHeight, endPosition.getRowIndex() * cellWidth, cellHeight, cellWidth);
@@ -104,13 +106,16 @@ public class MazeDisplay extends Canvas {
                     }
                 }
                 if (isSolved) {
-                    Image SolutionImage = new Image(new FileInputStream("resources/images/clue.png"));
+                    Image SolutionImage = new Image(new FileInputStream("resources/images/solve.png"));
                     for (int i = 0; i < solved[0].length - 1; i++) {
                         int x = solved[0][i];
                         int y = solved[1][i];
                         graphicsContext2D.drawImage(SolutionImage, y * cellHeight, x * cellWidth, cellHeight, cellWidth);
                     }
                 }
+                Image characterImage = new Image(new FileInputStream(getCharacterPath()));
+                graphicsContext2D.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
+
             } catch (FileNotFoundException e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText(String.format("Image doesn't exist: %s", e.getMessage()));

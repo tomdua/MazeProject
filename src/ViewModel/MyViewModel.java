@@ -15,13 +15,11 @@ import java.util.Observer;
 
 public class MyViewModel extends Observable implements Observer {
 
+    public StringProperty characterPositionRow = new SimpleStringProperty("Row"); //For Binding
+    public StringProperty characterPositionColumn = new SimpleStringProperty("Col"); //For Binding
     private IModel model;
-
     private int characterPositionRowIndex = 0;
     private int characterPositionColumnIndex = 0;
-
-    public StringProperty characterPositionRow = new SimpleStringProperty("1"); //For Binding
-    public StringProperty characterPositionColumn = new SimpleStringProperty("1"); //For Binding
 
     public MyViewModel(IModel model) {
         this.model = model;
@@ -43,53 +41,40 @@ public class MyViewModel extends Observable implements Observer {
         return model.generateMaze(width, height);
     }
 
-    public Position getEndPosition() {
-        return model.getEndPosition();
+    public Position getEndPosition() { return model.getEndPosition(); }
 
-    }
+    public void moveCharacter(KeyCode movement) { model.moveCharacter(movement); }
 
-    public void moveCharacter(KeyCode movement) {
-        model.moveCharacter(movement);
-    }
-
-    public void moveCharacter(MouseEvent movement, MazeDisplay mazeDisplay) {
-        model.moveCharacter(movement,mazeDisplay);
-    }
+    public void moveCharacter(MouseEvent movement, MazeDisplay mazeDisplay) { model.moveCharacter(movement, mazeDisplay); }
 
     public boolean gameFinish() {
         return model.gameFinish();
     }
 
-    public int[][] getMaze() {
-        return model.getMaze();
-    }
+    public int[][] getMaze() { return model.getMaze(); }
 
-    public void setCharacterPositionRow(int raw) {
-        model.setCharacterPositionRow(raw);
-    }
-
-    public void setCharacterPositionColumn(int column) {
-         model.setCharacterPositionCol(column);
+    public void setMaze(int[][] maze) {
+        model.setMaze(maze);
     }
 
     public int getCharacterPositionRow() {
         return characterPositionRowIndex;
     }
 
+    public void setCharacterPositionRow(int raw) { model.setCharacterPositionRow(raw); }
+
     public int getCharacterPositionColumn() {
         return characterPositionColumnIndex;
     }
 
-    public void getSolution(MyViewModel m, int charRow, int charCol, String x) {
-        model.generateSolution(m, charRow, charCol, x);
+    public void setCharacterPositionColumn(int column) {
+        model.setCharacterPositionCol(column);
     }
+
+    public void getSolution(MyViewModel m, int charRow, int charCol, String x) { model.generateSolution(m, charRow, charCol, x); }
 
     public boolean isSolved() {
         return model.isSolved();
-    }
-
-    public void setMaze(int[][] maze) {
-        model.setMaze(maze);
     }
 
     public int[][] getMazeSolutionArr() {
@@ -104,10 +89,8 @@ public class MyViewModel extends Observable implements Observer {
         model.load(file);
     }
 
-
     public void scroll(ScrollEvent event, MazeDisplay mazeDisplay) {
         model.scroll(event, mazeDisplay);
     }
-
 
 }

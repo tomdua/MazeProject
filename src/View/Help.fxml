@@ -6,17 +6,22 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="282.0" onMouseClicked="#closew" prefHeight="282.0" prefWidth="429.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Help">
+<AnchorPane minHeight="282.0" onMouseClicked="#closew" prefHeight="282.0" prefWidth="429.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Help">
   <children>
     <Pane layoutX="217.0" layoutY="117.0" prefHeight="200.0" prefWidth="200.0">
-         <children>
+      <children>
         <Button id="Exit" fx:id="exit" alignment="CENTER" layoutX="-69.0" layoutY="119.0" mnemonicParsing="false" onAction="#closew" text="Close Window" />
-         </children>
+      </children>
     </Pane>
-    <Label prefHeight="227.0" prefWidth="425.0" text="First you have to choose the character!&#10;Now it's possible to start .&#10;You start at a starting point, &#10;you have to reach the end point as quickly as possible.&#10;Watch out for the walls!&#10;If you get stuck and do not know where to go,&#10; you can use the Solve maze button." AnchorPane.bottomAnchor="76.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="14.0">
+    <Label layoutX="7.0" layoutY="45.0" prefHeight="227.0" prefWidth="425.0" text="First you have to choose the character!&#10;Now it's possible to start .&#10;You start at a starting point, and you have to &#10;reach to the desirble chair in two minutes.&#10;Be aware, you have only three chances to succeed!&#10;&#10;If you get stuck and do not know where to go,&#10;you can use the Solve maze button." AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="45.0">
       <font>
         <Font size="15.0" />
       </font>
     </Label>
+      <Label alignment="TOP_CENTER" layoutX="7.0" layoutY="14.0" prefHeight="34.0" prefWidth="432.0" text="Instructions">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
   </children>
 </AnchorPane>

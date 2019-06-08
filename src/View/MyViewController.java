@@ -37,7 +37,7 @@ import java.util.Observer;
 
 public class MyViewController implements Observer, IView {
 
-    private static final int startTime = 10;
+    private static final int startTime = 120;
     private static final String startLives = "* * *";
     @FXML
     private static MyViewModel viewModel = new MyViewModel(new MyModel());
@@ -66,7 +66,7 @@ public class MyViewController implements Observer, IView {
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
         bindProperties(viewModel);
-       btn_GenerateMaze.setVisible(false);
+        btn_GenerateMaze.setVisible(false);
     }
 
     private void bindProperties(MyViewModel viewModel) {
@@ -86,9 +86,10 @@ public class MyViewController implements Observer, IView {
             // btn_GenerateMaze.setDisable(false);
             if (viewModel.gameFinish() && !showOnce) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Well Done,\n"+
-                                    "You'r the king of the seven kingdoms");
+                alert.setContentText("Well Done,\n" +
+                        "You'r the king of the seven kingdoms");
                 Music(1);
+                time.stop();
                 alert.show();
                 btn_GenerateMaze.setDisable(false);
                 showOnce = true;
@@ -272,10 +273,10 @@ public class MyViewController implements Observer, IView {
         String path;
         if (x == 0) {
             songOnce = false;
-            path = "resources\\start.mp3";
+            path = "resources\\music\\start.mp3";
         } else {
             songOnce = true;
-            path = "resources\\end.mp3";
+            path = "resources\\music\\end.mp3";
         }
         Media temp = new Media(Paths.get(path).toUri().toString());
         mediaPlayer = new MediaPlayer(temp);
@@ -367,10 +368,10 @@ public class MyViewController implements Observer, IView {
         viewModel.scroll(event, mazeDisplay);
     }
 
-    public void cbCharacter(ActionEvent actionEvent)  {
+    public void cbCharacter(ActionEvent actionEvent) {
         if (cbBCharacter.getValue().equals("JonSnow"))
             mazeDisplay.changeImages("JonSnow");
-        else if(cbBCharacter.getValue().equals("Daenerys"))
+        else if (cbBCharacter.getValue().equals("Daenerys"))
             mazeDisplay.changeImages("Daenerys");
         else
             mazeDisplay.changeImages("CerseiLannister");

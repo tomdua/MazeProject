@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.text.Text?>
 
-<Pane minHeight="165.0" minWidth="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.About">
-    <children>
-        <Label fx:id="text" alignment="TOP_LEFT" layoutX="8.0" layoutY="8.0" prefHeight="121.0" prefWidth="283.0" />
-        <Button fx:id="exit" layoutX="104.0" layoutY="116.0" mnemonicParsing="false" onAction="#closeWindow" text="Close Window" />
-        <ImageView fx:id="NearExit" fitHeight="80.0" fitWidth="80.0" layoutX="14.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true" />
-        <Text layoutX="21.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Games Of Thrones Maze" wrappingWidth="165.47003173828125" />
-        <Text layoutX="21.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This maze is a project made in &quot;Advance Programing&quot; course" wrappingWidth="219.47003173828125" />
-        <Text layoutX="21.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright (c) 2019, Tom and Almog" wrappingWidth="202.13671875" />
-    </children>
+<Pane minHeight="165.0" minWidth="300.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="View.About">
+  <children>
+    <Label fx:id="text" alignment="TOP_LEFT" layoutX="8.0" layoutY="8.0" prefHeight="121.0" prefWidth="283.0" />
+    <Text layoutX="59.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Games Of Thrones Maze" wrappingWidth="165.47003173828125" />
+    <Text layoutX="21.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This maze is a project made in &quot;Advance Programing&quot; course" wrappingWidth="219.47003173828125">
+      <fill>
+        <Color blue="0.000" green="0.288" red="0.600" fx:id="x1" />
+      </fill>
+    </Text>
+    <Text fill="$x1" layoutX="14.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright (c) 2019, Tom and Almog" wrappingWidth="202.13671875" />
+    <Button fx:id="exit" layoutX="142.0" layoutY="127.0" mnemonicParsing="false" onAction="#closeWindow" text="Close Window" />
+  </children>
 </Pane>

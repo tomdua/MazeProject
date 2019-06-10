@@ -1,7 +1,15 @@
 .root{
-    -fx-background-color: #f0ffff;
+    -fx-background-color: white, derive(skyblue, 50%);
+    -fx-background-insets: 0, 10;
+    -fx-background-image: url("images/backround5.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
 }
 .button{
-    -fx-background-color: linear-gradient(#00ffff, #f0ffff);
+    -fx-background-color: linear-gradient(#dfe4eb, #3944ff);
     -fx-background-radius: 62;
+}
+.chart-bar {
+    -fx-bar-fill: rgba(29, 0, 13, 0.52);
 }

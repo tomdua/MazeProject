@@ -22,14 +22,13 @@
 
 <BorderPane onKeyPressed="#KeyPressed" prefHeight="480.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
     <top>
-        <MenuBar prefWidth="600.0" BorderPane.alignment="CENTER">
+        <MenuBar prefWidth="600.0" BorderPane.alignment="CENTER" styleClass="chart-bar">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#generateMaze" text="New Maze" />
                         <MenuItem mnemonicParsing="false" onAction="#saveGame" text="Save Maze" />
                         <MenuItem mnemonicParsing="false" onAction="#loadGame" text="Load Maze" />
-                        <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Options">
@@ -39,8 +38,17 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#Help" text="Help" />
-                        <MenuItem mnemonicParsing="false" onAction="#About" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#Help" text="Instructions" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="About">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#About" text="AboutUs" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Exit" >
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#exit" text="Close Maze" />
                     </items>
                 </Menu>
             </menus>

@@ -100,8 +100,12 @@
                                     <String fx:value="JonSnow" />
                                     <String fx:value="CerseiLannister" />
                                     <String fx:value="Daenerys" />
+
                                 </FXCollections>
                             </items>
+                            <value>
+                                <String fx:value="CerseiLannister" />
+                            </value>
                         </ChoiceBox>
                         <Text layoutX="4.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change Character" wrappingWidth="96.59765625" />
                         <Line endX="-59.0" layoutX="176.0" layoutY="135.0" startX="-70.0" startY="-9.0" />

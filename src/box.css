@@ -1,6 +1,13 @@
 .root{
-    -fx-background-color: #f0f8ff;
+    -fx-background-insets: 0, 10;
+    -fx-background-image: url("images/backround7.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center center;
 }
-.button{
-    -fx-background-color: linear-gradient(#00ffff, #00bfff);
+.button {
+
+    -fx-background-color: linear-gradient(#919191, #0f0505);
+    -fx-background-radius: 62;
+    -fx-text-fill: white;
 }

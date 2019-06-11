@@ -37,7 +37,7 @@ import java.util.Observer;
 
 public class MyViewController implements Observer, IView {
 
-    private static final int startTime = 120;
+    private static final int startTime = 12;
     private static final String startLives = "* * *";
     @FXML
     private static MyViewModel viewModel = new MyViewModel(new MyModel());
@@ -57,7 +57,7 @@ public class MyViewController implements Observer, IView {
     public javafx.scene.control.Button btn_StopMusic;
     public ChoiceBox cbBCharacter;
 
-    int mazeNum = 0;
+    int mazeNum = 1;
     boolean showOnce = false;
     boolean songOnce = true;
     private Timeline time;
@@ -83,7 +83,6 @@ public class MyViewController implements Observer, IView {
             mazeDisplay.setCharacterPosition(viewModel.getCharacterPositionRow(), viewModel.getCharacterPositionColumn());
             mazeDisplay.setGoalPosition(viewModel.getEndPosition());
             displayMaze(viewModel.getMaze());
-            // btn_GenerateMaze.setDisable(false);
             if (viewModel.gameFinish() && !showOnce) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Well Done,\n" +
@@ -157,7 +156,7 @@ public class MyViewController implements Observer, IView {
     }
 
 
-    public void mouseClicked(MouseEvent mouseEvent) {
+    public void mouseClicked() {
         this.mazeDisplay.requestFocus();
     }
 
@@ -177,16 +176,17 @@ public class MyViewController implements Observer, IView {
         });
     }
 
-    public void solveMaze(ActionEvent actionEvent) {
+    public void solveMaze() {
         viewModel.getSolution(this.viewModel, this.viewModel.getCharacterPositionRow(), this.viewModel.getCharacterPositionColumn(), "solve");
     }
 
 
-    public void exit(ActionEvent actionEvent) {
+    public void exit() {
+
         Platform.exit();
     }
 
-    public void About(ActionEvent actionEvent) {
+    public void About() {
         try {
             Stage stage = new Stage();
             stage.setTitle("About");
@@ -202,7 +202,7 @@ public class MyViewController implements Observer, IView {
         }
     }
 
-    public void Help(ActionEvent actionEvent) {
+    public void Help() {
         try {
             Stage stage = new Stage();
             stage.setTitle("Help");
@@ -214,12 +214,11 @@ public class MyViewController implements Observer, IView {
             stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
             stage.show();
         } catch (Exception e) {
-            System.out.println("Error Help.fxml not found");
+            System.out.println("Error miss file: Help.fxml");
         }
     }
 
-
-    public void Option(ActionEvent actionEvent) {
+    public void Option() {
         try {
             Stage stage = new Stage();
             stage.setTitle("Option");
@@ -231,33 +230,32 @@ public class MyViewController implements Observer, IView {
             stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
             stage.show();
         } catch (Exception e) {
-            System.out.println("Error Option.fxml not found");
+            System.out.println("Error miss file: Option.fxml");
         }
     }
 
     public void saveGame() {
         FileChooser fc = new FileChooser();
-        File filePath = new File("./Mazes/");
+        File filePath = new File("./GameOfThrones_Mazes/");
         if (!filePath.exists())
             filePath.mkdir();
         fc.setTitle("Saving maze");
-        fc.setInitialFileName("Maze Number " + mazeNum + "");
+        fc.setInitialFileName("GameOfThrones_MazeNumber" + mazeNum);
         mazeNum++;
         fc.setInitialDirectory(filePath);
-        File file = fc.showSaveDialog((Stage) mazeDisplay.getScene().getWindow());
+        File file = fc.showSaveDialog(mazeDisplay.getScene().getWindow());
         if (file != null)
             viewModel.save(file);
     }
 
     public void loadGame() {
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Loading maze");
-        File filePath = new File("./Mazes/");
-        if (!filePath.exists())
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Loading maze");
+        File filePath = new File("./GameOfThrones_Mazes/");
+        if (filePath.exists()!=false)
             filePath.mkdir();
-        fc.setInitialDirectory(filePath);
-        File file = fc.showOpenDialog(new PopupWindow() {
-        });
+        fileChooser.setInitialDirectory(filePath);
+        File file = fileChooser.showOpenDialog(new PopupWindow() {});
         if (file != null && file.exists() && !file.isDirectory()) {
             viewModel.load(file);
             if (songOnce == true)
@@ -265,13 +263,12 @@ public class MyViewController implements Observer, IView {
             mazeDisplay.redraw();
         }
     }
-
-
-    public void Music(int x) {
+    //set music on
+    public void Music(int on) {
         if (mediaPlayer != null)
             mediaPlayer.stop();
         String path;
-        if (x == 0) {
+        if (on == 0) {
             songOnce = false;
             path = "resources\\music\\start.mp3";
         } else {
@@ -282,8 +279,7 @@ public class MyViewController implements Observer, IView {
         mediaPlayer = new MediaPlayer(temp);
         mediaPlayer.play();
     }
-
-
+    //Update time for timer, every time 2 min(120 seconds) for finish.
     public void updateTime() {
         int seconds = timeSeconds.get();
         timeSeconds.set(seconds - 1);
@@ -309,8 +305,7 @@ public class MyViewController implements Observer, IView {
             }
         }
     }
-
-
+    //Update the life of the hero, when the time is over.
     public void updateLives() {
         String livesLeft = lives.get();
         if (livesLeft.equals("* * *"))
@@ -327,23 +322,13 @@ public class MyViewController implements Observer, IView {
             btn_GenerateMaze.setDisable(false);
         }
     }
-
     public void Timer() {
         time = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTime()));
         time.setCycleCount(Animation.INDEFINITE); // repeat over and over again
         timeSeconds.set(startTime);
         time.play();
     }
-
-
-    public void Mute(ActionEvent actionEvent) {
-        if (btn_StopMusic.getText().equals("Music")) {
-            setMusic(true);
-        } else {
-            setMusic(false);
-        }
-    }
-
+    //start music.
     private void setMusic(boolean musicOn) {
         if (musicOn) {
             this.mediaPlayer.play();
@@ -354,7 +339,14 @@ public class MyViewController implements Observer, IView {
 
         }
     }
-
+    //set music on mute
+    public void Mute() {
+        if (btn_StopMusic.getText().equals("Music")) {
+            setMusic(true);
+        } else {
+            setMusic(false);
+        }
+    }
     public void mouseDrag(MouseEvent k) {
         if (!showOnce) {
             if (k.isDragDetect()) {
@@ -363,13 +355,11 @@ public class MyViewController implements Observer, IView {
             }
         }
     }
-
-
     public void scroll(ScrollEvent event) {
         viewModel.scroll(event, mazeDisplay);
     }
-
-    public void cbCharacter(ActionEvent actionEvent) {
+    //button of change characters.
+    public void cbCharacter() {
         if (cbBCharacter.getValue().equals("JonSnow"))
             mazeDisplay.changeImages("JonSnow");
         else if (cbBCharacter.getValue().equals("Daenerys"))

@@ -18,11 +18,10 @@ public class MazeDisplay extends Canvas {
     private Position endPosition;
     private int[][] solved;
     private boolean isSolved;
-    private String homePath = "";
-    private String characterPath = "";
-    private String wallPath = "";
+    private String homePath = "resources/images/LannisterHome.png";
+    private String characterPath = "resources/images/CerseiLannister.png";
+    private String wallPath = "resources/images/wallCerseiLannister.jpg";
     GraphicsContext graphics = getGraphicsContext2D();
-
 
     public int[][] getMaze() {
         return maze;
@@ -97,9 +96,7 @@ public class MazeDisplay extends Canvas {
                 graphics.drawImage(StartPoint, 0, 0, cellHeight, cellWidth);
                 // Photo of wallImage:
                 Image wallImage = new Image(new FileInputStream(getWallPath()));
-                // Photo of character:
-                Image characterImage = new Image(new FileInputStream(getCharacterPath()));
-                graphics.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
+
                 // Photo of endGame:
                 Image endPos = new Image(new FileInputStream("resources/images/end.png"));
                 graphics.drawImage(endPos, endPosition.getColumnIndex() * cellHeight, endPosition.getRowIndex() * cellWidth, cellHeight, cellWidth);
@@ -120,7 +117,9 @@ public class MazeDisplay extends Canvas {
                         graphics.drawImage(SolutionImage, y * cellHeight, x * cellWidth, cellHeight, cellWidth);
                     }
                 }
-
+                // Photo of character:
+                Image characterImage = new Image(new FileInputStream(getCharacterPath()));
+                graphics.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
             } catch (FileNotFoundException e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText(String.format("Image not exist: %s", e.getMessage()));

@@ -16,12 +16,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
@@ -31,6 +32,7 @@ import javafx.scene.text.Text;
 import javafx.stage.*;
 import javafx.util.Duration;
 
+import javax.swing.text.html.ImageView;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.Observable;
@@ -39,7 +41,7 @@ import java.util.Optional;
 
 public class MyViewController implements Observer, IView {
 
-    private static final int startTime = 20;
+    private static final int startTime = 120;
     private static final String startLives = "* * *";
     @FXML
     private static MyViewModel viewModel = new MyViewModel(new MyModel());
@@ -57,18 +59,23 @@ public class MyViewController implements Observer, IView {
     public javafx.scene.control.Button btn_GenerateMaze;
     public javafx.scene.control.Button btn_SolveMaze;
     public javafx.scene.control.Button btn_StopMusic;
+    public AnchorPane MazePane;
     public ChoiceBox cbBCharacter;
     public Button button;
+    public javafx.scene.image.ImageView icon_zoomImageView;
+    private ImageView portraitImageView;
 
+    int mazeNum = 1;
     boolean showOnce = false;
     boolean songOnce = true;
     private Timeline time;
     private MediaPlayer mediaPlayer;
 
+
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
         bindProperties(viewModel);
-        btn_GenerateMaze.setVisible(true);
+        btn_GenerateMaze.setVisible(false);
     }
 
     private void bindProperties(MyViewModel viewModel) {
@@ -248,7 +255,8 @@ public class MyViewController implements Observer, IView {
         if (!filePath.exists())
             filePath.mkdir();
         fc.setTitle("Saving maze");
-        fc.setInitialFileName("GameOfThrones_MazeNumber");
+        fc.setInitialFileName("GameOfThrones_MazeNumber" + mazeNum);
+        mazeNum++;
         fc.setInitialDirectory(filePath);
         File file = fc.showSaveDialog(mazeDisplay.getScene().getWindow());
         if (file != null)
@@ -312,8 +320,8 @@ public class MyViewController implements Observer, IView {
                     Stage s = (Stage) button.getScene().getWindow();
                     s.close();
                 });
-                button.setLayoutX(115);
-                button.setLayoutY(150);
+                button.setAlignment(Pos.CENTER);//setLayoutX(90);
+               // button.setLayoutY(138);
 
                 Pane layout = new Pane();
                 layout.setPrefHeight(180);
@@ -322,7 +330,6 @@ public class MyViewController implements Observer, IView {
 
                 Text t1 = new Text();
                 t1.setText("Time is up!");
-                t1.setFont(Font.font ("Verdana", 20));
                 t1.setLayoutX(0);
                 t1.setLayoutY(35);
                 // t1.setFont(Font.font(System,19.5,));
@@ -330,10 +337,8 @@ public class MyViewController implements Observer, IView {
 
                 Text t2 = new Text();
                 t2.setText("Try again!\n" + "You can do it!");
-                t2.setFont(Font.font ("Verdana", 12.5));
                 t2.setLayoutY(79);
                 t2.setLayoutX(14);
-
 
                 layout.getChildren().add(t2);
                 Scene scene = new Scene(layout, 260, 185);
@@ -392,18 +397,57 @@ public class MyViewController implements Observer, IView {
         }
     }
 
-    public void mouseDrag(MouseEvent k) {
-        if (!showOnce) {
-            if (k.isDragDetect()) {
-                viewModel.moveCharacter(k, mazeDisplay);
-                k.consume();
+
+    public void mouseDragged(MouseEvent mouseEvent) {
+        if (mazeDisplay != null) {
+          //  lbl_statusBar.setText("");
+            /*int maxSize = Math.max(viewModel.getMaze()[0].length, viewModel.getMaze().length);
+            double cellHeight = mazeDisplay.getHeight() / maxSize;
+            double cellWidth = mazeDisplay.getWidth() / maxSize;
+            double canvasHeight = mazeDisplay.getHeight();
+            double canvasWidth = mazeDisplay.getWidth();
+            int rowMazeSize = viewModel.getMaze().length;
+            int colMazeSize = viewModel.getMaze()[0].length;
+            double startRow = (canvasHeight / 2-(cellHeight * rowMazeSize / 2)) / cellHeight;
+            double startCol = (canvasWidth / 2-(cellWidth * colMazeSize / 2)) / cellWidth;*/
+            int mouseY = (int) Math.floor(mouseEvent.getSceneY() / (mazeDisplay.getWidth() / mazeDisplay.getMaze()[0].length));
+            int mouseX = (int) Math.floor(mouseEvent.getSceneX() / (mazeDisplay.getHeight() / mazeDisplay.getMaze().length));
+            if (!viewModel.gameFinish()) {
+                if (mouseY < viewModel.getCharacterPositionRow())// && mouseX == viewModel.getCharacterPositionColumn()) {
+                    viewModel.moveCharacter(KeyCode.W);
+
+                if (mouseY > viewModel.getCharacterPositionRow())// && mouseX == viewModel.getCharacterPositionColumn()) {
+                    viewModel.moveCharacter(KeyCode.S);
+
+                if (mouseX < viewModel.getCharacterPositionColumn())// && mouseY == viewModel.getCharacterPositionRow()) {
+                    viewModel.moveCharacter(KeyCode.A);
+
+                if (mouseX > viewModel.getCharacterPositionColumn())// && mouseY == viewModel.getCharacterPositionRow()) {
+                    viewModel.moveCharacter(KeyCode.D);
+
             }
         }
     }
 
-    public void scroll(ScrollEvent event) {
-        viewModel.scroll(event, mazeDisplay);
+
+    public void zooming(ScrollEvent scrollEvent) {
+        try {
+            viewModel.getMaze();
+            AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
+            double zoomFactor;
+            if (scrollEvent.isControlDown()) {
+                zoomFactor = 1.5;
+                double deltaY = scrollEvent.getDeltaY();
+                if (deltaY < 0)
+                    zoomFactor = 1 / zoomFactor;
+                zoomOperator.zoom(mazeDisplay, zoomFactor, scrollEvent.getSceneX(), scrollEvent.getSceneY());
+                scrollEvent.consume();
+            }
+        } catch(NullPointerException e) {
+            scrollEvent.consume();
+        }
     }
+
 
     //button of change characters.
     public void cbCharacter() {

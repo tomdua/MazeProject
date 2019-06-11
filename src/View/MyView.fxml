@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import View.MazeDisplay?>
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
@@ -18,11 +19,10 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import View.MazeDisplay?>
 
-<BorderPane onKeyPressed="#KeyPressed" prefHeight="480.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
+<BorderPane onKeyPressed="#KeyPressed" onScroll="#zooming" prefHeight="480.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
     <top>
-        <MenuBar prefWidth="600.0" BorderPane.alignment="CENTER" styleClass="chart-bar">
+        <MenuBar prefWidth="600.0" styleClass="chart-bar" BorderPane.alignment="CENTER">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -46,7 +46,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#About" text="AboutUs" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Exit" >
+                <Menu mnemonicParsing="false" text="Exit">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#exit" text="Close Maze" />
                     </items>
@@ -57,7 +57,7 @@
     <center>
         <AnchorPane fx:id="MazePane" minHeight="450" minWidth="450" BorderPane.alignment="CENTER">
             <children>
-                <MazeDisplay fx:id="mazeDisplay" onMouseClicked="#mouseClicked" height="${MazePane.height}" width="${MazePane.width}" />
+                <MazeDisplay fx:id="mazeDisplay" height="${MazePane.height}" onScroll="#zooming" onMouseDragged="#mouseDragged" onMouseClicked="#mouseClicked" width="${MazePane.width}" />
             </children>
         </AnchorPane>
     </center>

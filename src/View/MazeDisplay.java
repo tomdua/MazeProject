@@ -132,15 +132,15 @@ public class MazeDisplay extends Canvas {
     // change the home,wall and characte images.
     public void changeImages(String character) {
         if (character.equals("JonSnow")) {
-            setCharacterPath("resources/images/JonSnow2.png");
+            setCharacterPath("resources/images/JonSnow.png");
             setHomePath("resources/images/JonSnowHome.png");
             setWallPath("resources/images/wallJonSnow.jpg");
         } else if (character.equals(("Daenerys"))) {
-            setCharacterPath("resources/images/Daenerys2.png");
+            setCharacterPath("resources/images/Daenerys.png");
             setHomePath("resources/images/DaenerysHome.png");
             setWallPath("resources/images/wallDaenerys.jpg");
         } else if (character.equals(("CerseiLannister"))) {
-            setCharacterPath("resources/images/CerseiLannister3.png");
+            setCharacterPath("resources/images/CerseiLannister.png");
             setHomePath("resources/images/LannisterHome.png");
             setWallPath("resources/images/wallCerseiLannister.jpg");
         }

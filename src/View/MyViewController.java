@@ -39,7 +39,7 @@ import java.util.Optional;
 
 public class MyViewController implements Observer, IView {
 
-    private static final int startTime = 10;
+    private static final int startTime = 2;
     private static final String startLives = "* * *";
     @FXML
     private static MyViewModel viewModel = new MyViewModel(new MyModel());
@@ -69,7 +69,7 @@ public class MyViewController implements Observer, IView {
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
         bindProperties(viewModel);
-        btn_GenerateMaze.setVisible(false);
+        btn_GenerateMaze.setVisible(true);
     }
 
     private void bindProperties(MyViewModel viewModel) {
@@ -314,8 +314,8 @@ public class MyViewController implements Observer, IView {
                     Stage s = (Stage) button.getScene().getWindow();
                     s.close();
                 });
-                button.setLayoutX(90);
-                button.setLayoutY(138);
+                button.setLayoutX(115);
+                button.setLayoutY(150);
 
                 Pane layout = new Pane();
                 layout.setPrefHeight(180);
@@ -324,6 +324,7 @@ public class MyViewController implements Observer, IView {
 
                 Text t1 = new Text();
                 t1.setText("Time is up!");
+                t1.setFont(Font.font ("Verdana", 20));
                 t1.setLayoutX(0);
                 t1.setLayoutY(35);
                 // t1.setFont(Font.font(System,19.5,));
@@ -331,8 +332,10 @@ public class MyViewController implements Observer, IView {
 
                 Text t2 = new Text();
                 t2.setText("Try again!\n" + "You can do it!");
+                t2.setFont(Font.font ("Verdana", 12.5));
                 t2.setLayoutY(79);
                 t2.setLayoutX(14);
+
 
                 layout.getChildren().add(t2);
                 Scene scene = new Scene(layout, 260, 185);

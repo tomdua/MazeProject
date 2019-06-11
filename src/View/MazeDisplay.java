@@ -98,7 +98,7 @@ public class MazeDisplay extends Canvas {
                 Image wallImage = new Image(new FileInputStream(getWallPath()));
 
                 // Photo of endGame:
-                Image endPos = new Image(new FileInputStream("resources/images/end.png"));
+                Image endPos = new Image(new FileInputStream("resources/images/end1.png"));
                 graphics.drawImage(endPos, endPosition.getColumnIndex() * cellHeight, endPosition.getRowIndex() * cellWidth, cellHeight, cellWidth);
 
                 //set maze on the screen
@@ -115,6 +115,7 @@ public class MazeDisplay extends Canvas {
                         int x = solved[0][i];
                         int y = solved[1][i];
                         graphics.drawImage(SolutionImage, y * cellHeight, x * cellWidth, cellHeight, cellWidth);
+
                     }
                 }
                 // Photo of character:
@@ -131,17 +132,18 @@ public class MazeDisplay extends Canvas {
     // change the home,wall and characte images.
     public void changeImages(String character) {
         if (character.equals("JonSnow")) {
-            setCharacterPath("resources/images/JonSnow.png");
+            setCharacterPath("resources/images/JonSnow2.png");
             setHomePath("resources/images/JonSnowHome.png");
             setWallPath("resources/images/wallJonSnow.jpg");
         } else if (character.equals(("Daenerys"))) {
-            setCharacterPath("resources/images/Daenerys.png");
+            setCharacterPath("resources/images/Daenerys2.png");
             setHomePath("resources/images/DaenerysHome.png");
             setWallPath("resources/images/wallDaenerys.jpg");
         } else if (character.equals(("CerseiLannister"))) {
-            setCharacterPath("resources/images/CerseiLannister.png");
+            setCharacterPath("resources/images/CerseiLannister3.png");
             setHomePath("resources/images/LannisterHome.png");
             setWallPath("resources/images/wallCerseiLannister.jpg");
         }
     }
+
 }

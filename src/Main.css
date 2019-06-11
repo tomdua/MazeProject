@@ -12,9 +12,9 @@
     -fx-text-fill: white;
 }
 .chart-bar {
-    -fx-bar-fill: rgba(29, 0, 13, 0.52);
+    -fx-bar-fill: rgba(254, 247, 255, 0.52);
 }
 .menu .label
 {
-    -fx-text-fill: #919191
+    -fx-text-fill: #000000
 }

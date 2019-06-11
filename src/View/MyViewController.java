@@ -13,31 +13,33 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.PopupWindow;
-import javafx.stage.Stage;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.*;
 import javafx.util.Duration;
 
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 
 public class MyViewController implements Observer, IView {
 
-    private static final int startTime = 12;
+    private static final int startTime = 10;
     private static final String startLives = "* * *";
     @FXML
     private static MyViewModel viewModel = new MyViewModel(new MyModel());
@@ -56,6 +58,7 @@ public class MyViewController implements Observer, IView {
     public javafx.scene.control.Button btn_SolveMaze;
     public javafx.scene.control.Button btn_StopMusic;
     public ChoiceBox cbBCharacter;
+    public Button button;
 
     int mazeNum = 1;
     boolean showOnce = false;
@@ -182,8 +185,14 @@ public class MyViewController implements Observer, IView {
 
 
     public void exit() {
-
-        Platform.exit();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure you want to leave the game?\n"
+                + "Don't miss the chance to be the\n"
+                + "King of the seven kingdom!");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Platform.exit();
+        }
     }
 
     public void About() {
@@ -252,10 +261,11 @@ public class MyViewController implements Observer, IView {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Loading maze");
         File filePath = new File("./GameOfThrones_Mazes/");
-        if (filePath.exists()!=false)
+        if (filePath.exists() != false)
             filePath.mkdir();
         fileChooser.setInitialDirectory(filePath);
-        File file = fileChooser.showOpenDialog(new PopupWindow() {});
+        File file = fileChooser.showOpenDialog(new PopupWindow() {
+        });
         if (file != null && file.exists() && !file.isDirectory()) {
             viewModel.load(file);
             if (songOnce == true)
@@ -263,6 +273,7 @@ public class MyViewController implements Observer, IView {
             mazeDisplay.redraw();
         }
     }
+
     //set music on
     public void Music(int on) {
         if (mediaPlayer != null)
@@ -279,6 +290,7 @@ public class MyViewController implements Observer, IView {
         mediaPlayer = new MediaPlayer(temp);
         mediaPlayer.play();
     }
+
     //Update time for timer, every time 2 min(120 seconds) for finish.
     public void updateTime() {
         int seconds = timeSeconds.get();
@@ -292,19 +304,47 @@ public class MyViewController implements Observer, IView {
             updateLives();
             timeSeconds.set(startTime);
             if (!lives.get().equals("")) {
-                //  Stage SettingsStage = (Stage) btnSignOut.getScene().getWindow();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Time is done,\n" +
-                        "try again");
-                alert.show();
-                //    ButtonType result = alert.getResult();
-                // if (result.equals(ButtonType.OK)) {
-                // if(viewModel.getCharacterPositionRow()!=0 || viewModel.getCharacterPositionColumn()!=0)
-                Timer();
-                // }
+                time.stop();
+                Stage stage = new Stage();
+                stage.setTitle("Alert");
+                button = new Button();
+                button.setText("OK");
+                button.setOnAction(event -> {
+                    Timer();
+                    Stage s = (Stage) button.getScene().getWindow();
+                    s.close();
+                });
+                button.setLayoutX(90);
+                button.setLayoutY(138);
+
+                Pane layout = new Pane();
+                layout.setPrefHeight(180);
+                layout.setPrefWidth(260);
+                layout.getChildren().add(button);
+
+                Text t1 = new Text();
+                t1.setText("Time is up!");
+                t1.setLayoutX(0);
+                t1.setLayoutY(35);
+                // t1.setFont(Font.font(System,19.5,));
+                layout.getChildren().add(t1);
+
+                Text t2 = new Text();
+                t2.setText("Try again!\n" + "You can do it!");
+                t2.setLayoutY(79);
+                t2.setLayoutX(14);
+
+                layout.getChildren().add(t2);
+                Scene scene = new Scene(layout, 260, 185);
+
+                stage.setScene(scene);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.show();
             }
         }
     }
+
+
     //Update the life of the hero, when the time is over.
     public void updateLives() {
         String livesLeft = lives.get();
@@ -322,12 +362,14 @@ public class MyViewController implements Observer, IView {
             btn_GenerateMaze.setDisable(false);
         }
     }
+
     public void Timer() {
         time = new Timeline(new KeyFrame(Duration.seconds(1), evt -> updateTime()));
         time.setCycleCount(Animation.INDEFINITE); // repeat over and over again
         timeSeconds.set(startTime);
         time.play();
     }
+
     //start music.
     private void setMusic(boolean musicOn) {
         if (musicOn) {
@@ -339,6 +381,7 @@ public class MyViewController implements Observer, IView {
 
         }
     }
+
     //set music on mute
     public void Mute() {
         if (btn_StopMusic.getText().equals("Music")) {
@@ -347,6 +390,7 @@ public class MyViewController implements Observer, IView {
             setMusic(false);
         }
     }
+
     public void mouseDrag(MouseEvent k) {
         if (!showOnce) {
             if (k.isDragDetect()) {
@@ -355,9 +399,11 @@ public class MyViewController implements Observer, IView {
             }
         }
     }
+
     public void scroll(ScrollEvent event) {
         viewModel.scroll(event, mazeDisplay);
     }
+
     //button of change characters.
     public void cbCharacter() {
         if (cbBCharacter.getValue().equals("JonSnow"))
@@ -368,5 +414,6 @@ public class MyViewController implements Observer, IView {
             mazeDisplay.changeImages("CerseiLannister");
         btn_GenerateMaze.setVisible(true);
     }
+
 
 }

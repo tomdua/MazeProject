@@ -14,12 +14,12 @@
   <children>
     <AnchorPane />
     <Button fx:id="exit" alignment="CENTER" contentDisplay="CENTER" layoutX="140.0" layoutY="254.0" mnemonicParsing="false" onAction="#closeWindow" text="Close Window" />
-    <Label layoutX="18.0" layoutY="67.0" prefHeight="42.0" prefWidth="368.0" text="Algorithem            -       Depth-first search ">
+    <Label layoutX="18.0" layoutY="67.0" prefHeight="42.0" prefWidth="368.0" text="Algorithem            -      Breadth First Search ">
       <font>
         <Font name="Arial Black" size="15.0" fx:id="x1" />
       </font>
     </Label>
-    <Label font="$x1" layoutX="18.0" layoutY="125.0" prefHeight="42.0" prefWidth="368.0" text="Maze Type             -      My Maze" />
+    <Label font="$x1" layoutX="18.0" layoutY="125.0" prefHeight="42.0" prefWidth="368.0" text="Maze Type        -    MyMazeGenerator " />
     <Label font="$x1" layoutX="17.0" layoutY="184.0" prefHeight="42.0" prefWidth="368.0" text="Threads Number    -       2" />
     <Label layoutX="74.0" layoutY="14.0" prefHeight="42.0" prefWidth="210.0" text="Properties-Default">
       <font>

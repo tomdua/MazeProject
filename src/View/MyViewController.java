@@ -39,7 +39,7 @@ import java.util.Optional;
 
 public class MyViewController implements Observer, IView {
 
-    private static final int startTime = 2;
+    private static final int startTime = 20;
     private static final String startLives = "* * *";
     @FXML
     private static MyViewModel viewModel = new MyViewModel(new MyModel());
@@ -60,7 +60,6 @@ public class MyViewController implements Observer, IView {
     public ChoiceBox cbBCharacter;
     public Button button;
 
-    int mazeNum = 1;
     boolean showOnce = false;
     boolean songOnce = true;
     private Timeline time;
@@ -249,8 +248,7 @@ public class MyViewController implements Observer, IView {
         if (!filePath.exists())
             filePath.mkdir();
         fc.setTitle("Saving maze");
-        fc.setInitialFileName("GameOfThrones_MazeNumber" + mazeNum);
-        mazeNum++;
+        fc.setInitialFileName("GameOfThrones_MazeNumber");
         fc.setInitialDirectory(filePath);
         File file = fc.showSaveDialog(mazeDisplay.getScene().getWindow());
         if (file != null)

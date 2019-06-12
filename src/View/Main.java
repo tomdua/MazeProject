@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -40,22 +41,12 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image("file:resources/images/icon.png"));
         primaryStage.setMinHeight(500);
         primaryStage.setMinWidth(600);
-
         //--------------
         MyViewController view = fxmlLoader.getController();
         view.setResizeEvent(scene);
         view.setViewModel(viewModel);
         viewModel.addObserver(view);
         primaryStage.setScene(scene);
-        //--------------
-        scene.setOnScroll(event1 -> {
-            view.scroll(event1);
-        });
-
-        //--------------
-        scene.setOnMouseDragged(event -> {
-            view.mouseDrag(event);
-        });
         //--------------
         SetStageCloseEvent(primaryStage);
         primaryStage.show();

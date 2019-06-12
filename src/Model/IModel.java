@@ -16,8 +16,6 @@ public interface IModel {
 
     void moveCharacter(KeyCode movement);
 
-    void moveCharacter(MouseEvent movement, MazeDisplay md);
-
     int[][] getMaze();
 
     void setGoalPosition(Position goalPosition);
@@ -47,8 +45,5 @@ public interface IModel {
     void setMazeOriginal(Maze m);
 
     void setMaze(int[][] maze);
-
-    void scroll(ScrollEvent event, MazeDisplay mazeDisplay);
-
 
 }

@@ -5,9 +5,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
 
-import java.awt.*;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 

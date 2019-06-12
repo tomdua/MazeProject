@@ -45,8 +45,6 @@ public class MyViewModel extends Observable implements Observer {
 
     public void moveCharacter(KeyCode movement) { model.moveCharacter(movement); }
 
-    public void moveCharacter(MouseEvent movement, MazeDisplay mazeDisplay) { model.moveCharacter(movement, mazeDisplay); }
-
     public boolean gameFinish() {
         return model.gameFinish();
     }
@@ -57,15 +55,11 @@ public class MyViewModel extends Observable implements Observer {
         model.setMaze(maze);
     }
 
-    public int getCharacterPositionRow() {
-        return characterPositionRowIndex;
-    }
+    public int getCharacterPositionRow() { return characterPositionRowIndex; }
 
     public void setCharacterPositionRow(int raw) { model.setCharacterPositionRow(raw); }
 
-    public int getCharacterPositionColumn() {
-        return characterPositionColumnIndex;
-    }
+    public int getCharacterPositionColumn() { return characterPositionColumnIndex; }
 
     public void setCharacterPositionColumn(int column) {
         model.setCharacterPositionCol(column);
@@ -87,10 +81,6 @@ public class MyViewModel extends Observable implements Observer {
 
     public void load(File file) {
         model.load(file);
-    }
-
-    public void scroll(ScrollEvent event, MazeDisplay mazeDisplay) {
-        model.scroll(event, mazeDisplay);
     }
 
 }

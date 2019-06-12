@@ -229,7 +229,7 @@ public class MyModel extends Observable implements IModel {
 
     }
 
-    @Override
+ /*   @Override
     public void moveCharacter(MouseEvent movement, MazeDisplay md) {
         if (md.getMaze() != null) {
             int mouseY = (int) Math.floor(movement.getSceneY() / (md.getWidth() / md.getMaze()[0].length));
@@ -257,7 +257,7 @@ public class MyModel extends Observable implements IModel {
             stage.setWidth(stage.getWidth()-5);
         }
         mazeDisplay.redraw();
-    }
+    }*/
 
     @Override
     public int[][] getMaze() {

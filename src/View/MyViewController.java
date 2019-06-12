@@ -28,6 +28,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.*;
 import javafx.util.Duration;
@@ -39,9 +40,11 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
 
+import static javax.swing.text.StyleConstants.Bold;
+
 public class MyViewController implements Observer, IView {
 
-    private static final int startTime = 120;
+    private static final int startTime = 10;
     private static final String startLives = "* * *";
     @FXML
     private static MyViewModel viewModel = new MyViewModel(new MyModel());
@@ -62,8 +65,6 @@ public class MyViewController implements Observer, IView {
     public AnchorPane MazePane;
     public ChoiceBox cbBCharacter;
     public Button button;
-    public javafx.scene.image.ImageView icon_zoomImageView;
-    private ImageView portraitImageView;
 
     int mazeNum = 1;
     boolean showOnce = false;
@@ -84,7 +85,6 @@ public class MyViewController implements Observer, IView {
         lbl_rowsNum.textProperty().bind(viewModel.characterPositionRow);
         lbl_columnsNum.textProperty().bind(viewModel.characterPositionColumn);
     }
-
     @Override
     public void update(Observable o, Object arg) {
         if (o == viewModel) {
@@ -105,7 +105,6 @@ public class MyViewController implements Observer, IView {
             mazeDisplay.redraw();
         }
     }
-
     @Override
     public void displayMaze(int[][] maze) {
         int characterPositionRow = viewModel.getCharacterPositionRow();
@@ -164,11 +163,9 @@ public class MyViewController implements Observer, IView {
         keyEvent.consume();
     }
 
-
     public void mouseClicked() {
         this.mazeDisplay.requestFocus();
     }
-
 
     public void setResizeEvent(Scene scene) {
         scene.widthProperty().addListener(new ChangeListener<Number>() {
@@ -188,7 +185,6 @@ public class MyViewController implements Observer, IView {
     public void solveMaze() {
         viewModel.getSolution(this.viewModel, this.viewModel.getCharacterPositionRow(), this.viewModel.getCharacterPositionColumn(), "solve");
     }
-
 
     public void exit() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -320,8 +316,9 @@ public class MyViewController implements Observer, IView {
                     Stage s = (Stage) button.getScene().getWindow();
                     s.close();
                 });
-                button.setAlignment(Pos.CENTER);//setLayoutX(90);
-               // button.setLayoutY(138);
+                button.setAlignment(Pos.BOTTOM_CENTER);
+                button.setLayoutX(100);
+                button.setLayoutY(138);
 
                 Pane layout = new Pane();
                 layout.setPrefHeight(180);
@@ -330,15 +327,17 @@ public class MyViewController implements Observer, IView {
 
                 Text t1 = new Text();
                 t1.setText("Time is up!");
-                t1.setLayoutX(0);
-                t1.setLayoutY(35);
+                t1.setFont(Font.font("System", FontWeight.BOLD,22));
+                t1.setLayoutX(70);
+                t1.setLayoutY(45);
                 // t1.setFont(Font.font(System,19.5,));
                 layout.getChildren().add(t1);
 
                 Text t2 = new Text();
-                t2.setText("Try again!\n" + "You can do it!");
-                t2.setLayoutY(79);
-                t2.setLayoutX(14);
+                t2.setText("Try again," + "You can do it!");
+                t2.setFont(Font.font("System",17.7));
+                t2.setLayoutY(100);
+                t2.setLayoutX(35);
 
                 layout.getChildren().add(t2);
                 Scene scene = new Scene(layout, 260, 185);
@@ -349,7 +348,6 @@ public class MyViewController implements Observer, IView {
             }
         }
     }
-
 
     //Update the life of the hero, when the time is over.
     public void updateLives() {
@@ -375,7 +373,6 @@ public class MyViewController implements Observer, IView {
         timeSeconds.set(startTime);
         time.play();
     }
-
     //start music.
     private void setMusic(boolean musicOn) {
         if (musicOn) {
@@ -387,7 +384,6 @@ public class MyViewController implements Observer, IView {
 
         }
     }
-
     //set music on mute
     public void Mute() {
         if (btn_StopMusic.getText().equals("Music")) {
@@ -396,7 +392,6 @@ public class MyViewController implements Observer, IView {
             setMusic(false);
         }
     }
-
 
     public void mouseDragged(MouseEvent mouseEvent) {
         if (mazeDisplay != null) {
@@ -429,7 +424,6 @@ public class MyViewController implements Observer, IView {
         }
     }
 
-
     public void zooming(ScrollEvent scrollEvent) {
         try {
             viewModel.getMaze();
@@ -447,8 +441,6 @@ public class MyViewController implements Observer, IView {
             scrollEvent.consume();
         }
     }
-
-
     //button of change characters.
     public void cbCharacter() {
         if (cbBCharacter.getValue().equals("JonSnow"))
@@ -459,6 +451,4 @@ public class MyViewController implements Observer, IView {
             mazeDisplay.changeImages("CerseiLannister");
         btn_GenerateMaze.setVisible(true);
     }
-
-
 }

@@ -15,8 +15,8 @@ import java.util.Observer;
 
 public class MyViewModel extends Observable implements Observer {
 
-    public StringProperty characterPositionRow = new SimpleStringProperty("Row"); //For Binding
-    public StringProperty characterPositionColumn = new SimpleStringProperty("Col"); //For Binding
+    public StringProperty characterPositionRow = new SimpleStringProperty("Row");
+    public StringProperty characterPositionColumn = new SimpleStringProperty("Col");
     private IModel model;
     private int characterPositionRowIndex = 0;
     private int characterPositionColumnIndex = 0;

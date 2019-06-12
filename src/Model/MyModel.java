@@ -37,38 +37,34 @@ public class MyModel extends Observable implements IModel {
     private int[][] mazeSolutionArr;
     private Server serverMazeGenerator;
     private Server serverSolveMaze;
+    Client client;
     //private ExecutorService threadPool = Executors.newCachedThreadPool();
 
     public int getCharacterPositionRow() {
         return characterPositionRow;
     }
-
     public void setCharacterPositionRow(int row) {
         this.characterPositionRow = row;
     }
-
     public int getCharacterPositionColumn() { return characterPositionColumn; }
-
     public void setCharacterPositionCol(int col) {
         this.characterPositionColumn = col;
     }
-
     public Position getEndPosition() {
         return endPosition;
     }
-
     @Override
     public boolean gameFinish() {
         return gameFinish;
     }
 
-    private void MazeToArr(Maze m) {
-        int row = m.numOfRows();
-        int col = m.numOfColumns();
-        maze = new int[row][col];
+    private void MazeToArr(Maze maze) {
+        int row = maze.numOfRows();
+        int col = maze.numOfColumns();
+        this.maze = new int[row][col];
         for (int i = 0; i < row; i++)
             for (int j = 0; j < col; j++)
-                maze[i][j] = m.getCellValue(i, j);
+                this.maze[i][j] = maze.getCellValue(i, j);
     }
 
     @Override
@@ -76,7 +72,7 @@ public class MyModel extends Observable implements IModel {
         serverMazeGenerator = new Server(5400, 1000, new ServerStrategyGenerateMaze());
         serverMazeGenerator.start();
         try {
-            Client client = new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
+            client = new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
                 @Override
                 public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
                     try {
@@ -93,13 +89,15 @@ public class MyModel extends Observable implements IModel {
                         byte[] decompressedMaze = new byte[mazeDimensions[0] * mazeDimensions[1] + 8 /*CHANGESIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressedmaze -
                         is.read(decompressedMaze); //Fill decompressedMazewith bytes
                         Maze maze = new Maze(decompressedMaze);
-                        Position UpdatePos = new Position(1, 1);
+                        Position UpdatePos;
+                        //UpdatePos = new Position(1, 1);
                         UpdatePos = maze.getStartPosition();
                         Original = maze;
                         characterPositionColumn = UpdatePos.getColumnIndex();
                         characterPositionRow = UpdatePos.getRowIndex();
                         endPosition = maze.getGoalPosition();
                         MazeToArr(maze);
+                       Thread.sleep(2000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -117,7 +115,7 @@ public class MyModel extends Observable implements IModel {
 
 
     @Override
-    public void generateSolution(MyViewModel m, int charRow, int charCol, String x) {
+    public void generateSolution(MyViewModel m, int charRow, int charCol, String str) {
         serverSolveMaze = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
         serverSolveMaze.start();
         try {
@@ -138,7 +136,7 @@ public class MyModel extends Observable implements IModel {
                         ArrayList<AState> mazeSolutionSteps = mazeSolution.getSolutionPath();
                         int sizeOfSolution = mazeSolutionSteps.size();
                         mazeSolutionArr = new int[2][sizeOfSolution];
-                        if(x == "solve") {
+                        if(str.equals("solve")) {
                             for (int i = 0; i < mazeSolutionSteps.size(); i++) {
                                 mazeSolutionArr[0][i] = ((MazeState) (mazeSolutionSteps.get(i))).getRow();
                                 mazeSolutionArr[1][i] = ((MazeState) (mazeSolutionSteps.get(i))).getCol();
@@ -146,6 +144,7 @@ public class MyModel extends Observable implements IModel {
                         }
                         setChanged();
                         notifyObservers();
+                        Thread.sleep(2000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

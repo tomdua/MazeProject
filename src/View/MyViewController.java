@@ -4,6 +4,7 @@ import Model.MyModel;
 import ViewModel.MyViewModel;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -16,8 +17,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -46,6 +49,7 @@ public class MyViewController implements Observer, IView {
 
     private static final int startTime = 10;
     private static final String startLives = "* * *";
+    private Timeline timeline= new Timeline(60);
     @FXML
     private static MyViewModel viewModel = new MyViewModel(new MyModel());
     private final StringProperty lives = new SimpleStringProperty(startLives);
@@ -427,20 +431,44 @@ public class MyViewController implements Observer, IView {
     public void zooming(ScrollEvent scrollEvent) {
         try {
             viewModel.getMaze();
-            AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
+           // AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
             double zoomFactor;
             if (scrollEvent.isControlDown()) {
                 zoomFactor = 1.5;
                 double deltaY = scrollEvent.getDeltaY();
                 if (deltaY < 0)
                     zoomFactor = 1 / zoomFactor;
-                zoomOperator.zoom(mazeDisplay, zoomFactor, scrollEvent.getSceneX(), scrollEvent.getSceneY());
+                zoom(mazeDisplay, zoomFactor, scrollEvent.getSceneX(), scrollEvent.getSceneY());
                 scrollEvent.consume();
             }
         } catch(NullPointerException e) {
             scrollEvent.consume();
         }
     }
+
+    public void zoom(Node node, double factor, double x, double y) {
+        // determine scale
+        double oldScale = node.getScaleX();
+        double scale = oldScale * factor;
+        double f = (scale / oldScale)-1;
+
+        // determine offset that we will have to move the node
+        Bounds bounds = node.localToScene(node.getLayoutBounds(), true);
+        double dx = (x-(bounds.getWidth() / 2+bounds.getMinX()));
+        double dy = (y-(bounds.getHeight() / 2+bounds.getMinY()));
+
+        // timeline that scales and moves the node
+        timeline.getKeyFrames().clear();
+        timeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.millis(100), new KeyValue(node.translateXProperty(), node.getTranslateX()-f * dx)),
+                new KeyFrame(Duration.millis(100), new KeyValue(node.translateYProperty(), node.getTranslateY()-f * dy)),
+                new KeyFrame(Duration.millis(100), new KeyValue(node.scaleXProperty(), scale)),
+                new KeyFrame(Duration.millis(100), new KeyValue(node.scaleYProperty(), scale))
+        );
+        timeline.play();
+    }
+
+
     //button of change characters.
     public void cbCharacter() {
         if (cbBCharacter.getValue().equals("JonSnow"))

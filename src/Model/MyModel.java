@@ -24,8 +24,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 public class MyModel extends Observable implements IModel {
@@ -39,38 +37,34 @@ public class MyModel extends Observable implements IModel {
     private int[][] mazeSolutionArr;
     private Server serverMazeGenerator;
     private Server serverSolveMaze;
-    private ExecutorService threadPool = Executors.newCachedThreadPool();
+    Client client;
+    //private ExecutorService threadPool = Executors.newCachedThreadPool();
 
     public int getCharacterPositionRow() {
         return characterPositionRow;
     }
-
     public void setCharacterPositionRow(int row) {
         this.characterPositionRow = row;
     }
-
     public int getCharacterPositionColumn() { return characterPositionColumn; }
-
     public void setCharacterPositionCol(int col) {
         this.characterPositionColumn = col;
     }
-
     public Position getEndPosition() {
         return endPosition;
     }
-
     @Override
     public boolean gameFinish() {
         return gameFinish;
     }
 
-    private void MazeToArr(Maze m) {
-        int row = m.numOfRows();
-        int col = m.numOfColumns();
-        maze = new int[row][col];
+    private void MazeToArr(Maze maze) {
+        int row = maze.numOfRows();
+        int col = maze.numOfColumns();
+        this.maze = new int[row][col];
         for (int i = 0; i < row; i++)
             for (int j = 0; j < col; j++)
-                maze[i][j] = m.getCellValue(i, j);
+                this.maze[i][j] = maze.getCellValue(i, j);
     }
 
     @Override
@@ -78,7 +72,7 @@ public class MyModel extends Observable implements IModel {
         serverMazeGenerator = new Server(5400, 1000, new ServerStrategyGenerateMaze());
         serverMazeGenerator.start();
         try {
-            Client client = new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
+            client = new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
                 @Override
                 public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
                     try {
@@ -95,13 +89,15 @@ public class MyModel extends Observable implements IModel {
                         byte[] decompressedMaze = new byte[mazeDimensions[0] * mazeDimensions[1] + 8 /*CHANGESIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressedmaze -
                         is.read(decompressedMaze); //Fill decompressedMazewith bytes
                         Maze maze = new Maze(decompressedMaze);
-                        Position UpdatePos = new Position(1, 1);
+                        Position UpdatePos;
+                        //UpdatePos = new Position(1, 1);
                         UpdatePos = maze.getStartPosition();
                         Original = maze;
                         characterPositionColumn = UpdatePos.getColumnIndex();
                         characterPositionRow = UpdatePos.getRowIndex();
                         endPosition = maze.getGoalPosition();
                         MazeToArr(maze);
+                       Thread.sleep(2000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -119,7 +115,7 @@ public class MyModel extends Observable implements IModel {
 
 
     @Override
-    public void generateSolution(MyViewModel m, int charRow, int charCol, String x) {
+    public void generateSolution(MyViewModel m, int charRow, int charCol, String str) {
         serverSolveMaze = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
         serverSolveMaze.start();
         try {
@@ -140,7 +136,7 @@ public class MyModel extends Observable implements IModel {
                         ArrayList<AState> mazeSolutionSteps = mazeSolution.getSolutionPath();
                         int sizeOfSolution = mazeSolutionSteps.size();
                         mazeSolutionArr = new int[2][sizeOfSolution];
-                        if(x == "solve") {
+                        if(str.equals("solve")) {
                             for (int i = 0; i < mazeSolutionSteps.size(); i++) {
                                 mazeSolutionArr[0][i] = ((MazeState) (mazeSolutionSteps.get(i))).getRow();
                                 mazeSolutionArr[1][i] = ((MazeState) (mazeSolutionSteps.get(i))).getCol();
@@ -148,6 +144,7 @@ public class MyModel extends Observable implements IModel {
                         }
                         setChanged();
                         notifyObservers();
+                        Thread.sleep(2000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -231,10 +228,41 @@ public class MyModel extends Observable implements IModel {
 
     }
 
+ /*   @Override
+    public void moveCharacter(MouseEvent movement, MazeDisplay md) {
+        if (md.getMaze() != null) {
+            int mouseY = (int) Math.floor(movement.getSceneY() / (md.getWidth() / md.getMaze()[0].length));
+            int mouseX = (int) Math.floor(movement.getSceneX() / (md.getHeight() / md.getMaze().length));
+            if (mouseY < md.getCharacterPositionRaw())
+                moveCharacter(KeyCode.NUMPAD8);
+            if (mouseY > md.getCharacterPositionRaw())
+                moveCharacter(KeyCode.NUMPAD2);
+            if (mouseX < md.getCharacterPositionColumn())
+                moveCharacter(KeyCode.NUMPAD4);
+            if (mouseX > md.getCharacterPositionColumn())
+                moveCharacter(KeyCode.NUMPAD6);
+        }
+    }
+
+
+    public void scroll(ScrollEvent event, MazeDisplay mazeDisplay) {
+        Double direction = event.getDeltaY();
+        Stage stage  = Main.primaryStage;
+        if(direction > 0) {
+            stage.setHeight(stage.getHeight()+5);
+            stage.setWidth(stage.getWidth()+5);
+        }else{
+            stage.setHeight(stage.getHeight()-5);
+            stage.setWidth(stage.getWidth()-5);
+        }
+        mazeDisplay.redraw();
+    }*/
+
     @Override
     public int[][] getMaze() {
         return maze;
     }
+
 
     @Override
     public void setGoalPosition(Position goalPosition) {

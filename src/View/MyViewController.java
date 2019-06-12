@@ -76,7 +76,7 @@ public class MyViewController implements Observer, IView {
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
         bindProperties(viewModel);
-        btn_GenerateMaze.setVisible(false);
+        //btn_GenerateMaze.setVisible(false);
     }
 
     private void bindProperties(MyViewModel viewModel) {

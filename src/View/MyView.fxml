@@ -81,19 +81,19 @@
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Row" translateX="6.0" translateY="5.0" translateZ="24.0" />
                             </children>
                         </VBox>
-                        <TextField fx:id="txt_col" text="10" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="txt_row" text="10" GridPane.columnIndex="1" />
+                        <TextField fx:id="text_col" text="15" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="text_row" text="15" GridPane.columnIndex="1" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Col" translateX="8.0" GridPane.rowIndex="1" />
-                        <Label fx:id="lbl_rowsNum" text="Row" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="lbl_columnsNum" text="Col" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="label_rowsNum" text="Row" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="label_columnsNum" text="Col" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" Current Row" GridPane.rowIndex="2" />
                         <Text layoutX="10.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Current Col" GridPane.rowIndex="3" />
                     </children>
                 </GridPane>
                 <AnchorPane prefHeight="336.0" prefWidth="136.0">
                     <children>
-                        <Button fx:id="btn_SolveMaze" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#solveMaze" prefHeight="25.0" prefWidth="118.0" text="Solve Maze" visible="false" />
-                        <Button fx:id="btn_GenerateMaze" defaultButton="true" layoutX="4.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateMaze" prefHeight="25.0" prefWidth="118.0" text="Generate" />
+                        <Button fx:id="button_SolveMaze" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#solveMaze" prefHeight="25.0" prefWidth="118.0" text="Solve Maze" visible="false" />
+                        <Button fx:id="button_GenerateMaze" defaultButton="true" layoutX="4.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateMaze" prefHeight="25.0" prefWidth="118.0" text="Generate" />
                         <ChoiceBox fx:id="cbBCharacter" layoutX="5.0" layoutY="207.0" onAction="#cbCharacter" prefHeight="25.0" prefWidth="118.0">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
@@ -172,12 +172,12 @@
                                 <Font size="10.0" />
                             </font>
                         </Text>
-                        <Label fx:id="lbl_timeLeft" layoutX="14.0" layoutY="303.0" text="Time">
+                        <Label fx:id="label_timeLeft" layoutX="14.0" layoutY="303.0" text="Time">
                             <font>
                                 <Font name="System Bold" size="13.0" />
                             </font>
                         </Label>
-                        <Label fx:id="lbl_livesLeft" layoutX="86.0" layoutY="303.0" text="Lives">
+                        <Label fx:id="label_livesLeft" layoutX="86.0" layoutY="303.0" text="Lives">
                             <font>
                                 <Font name="System Bold" size="13.0" />
                             </font>
@@ -192,7 +192,7 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Text>
-                  <Button fx:id="btn_StopMusic" layoutX="11.0" layoutY="236.0" mnemonicParsing="false" onAction="#Mute" prefHeight="25.0" prefWidth="64.0" text="Mute" visible="false" />
+                  <Button fx:id="button_StopMusic" layoutX="11.0" layoutY="236.0" mnemonicParsing="false" onAction="#Mute" prefHeight="25.0" prefWidth="64.0" text="Mute" visible="false" />
                     </children>
                 </AnchorPane>
                 <AnchorPane />

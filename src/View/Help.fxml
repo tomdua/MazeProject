@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="282.0" onMouseClicked="#closew" prefHeight="282.0" prefWidth="429.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Help">
+<AnchorPane minHeight="282.0" onMouseClicked="#closeWindow" prefHeight="282.0" prefWidth="429.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Help">
   <children>
     <Pane layoutX="217.0" layoutY="117.0" prefHeight="200.0" prefWidth="200.0">
       <children>
-        <Button id="Exit" fx:id="exit" alignment="CENTER" layoutX="-69.0" layoutY="119.0" mnemonicParsing="false" onAction="#closew" text="Close Window" />
+        <Button id="Exit" fx:id="exit" alignment="CENTER" layoutX="-69.0" layoutY="119.0" mnemonicParsing="false" onAction="#closeWindow" text="Close Window" />
       </children>
     </Pane>
     <Label prefHeight="227.0" prefWidth="425.0" text="First you have to choose the character!&#10;Now it's possible to start .&#10;You start at a starting point, and you have to &#10;reach to the desirble chair in two minutes.&#10;Be aware, you have only three chances to succeed!&#10;&#10;If you get stuck and do not know where to go,&#10;you can use the Solve maze button." AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="45.0">

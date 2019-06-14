@@ -10,13 +10,13 @@ public class About implements Initializable {
     public javafx.scene.control.Button exit;
     public javafx.scene.control.Label text;
 
+    public void initialize(URL location, ResourceBundle resources) {
+    }
+
     public void closeWindow() {
         Stage s = (Stage) exit.getScene().getWindow();
         s.close();
     }
 
-
-    public void initialize(URL location, ResourceBundle resources) {
-    }
 
 }

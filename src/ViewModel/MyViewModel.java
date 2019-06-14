@@ -12,12 +12,15 @@ import javafx.scene.input.ScrollEvent;
 import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
+/**
+ * MyViewModel class extends Observable implements Observer
 
+ */
 public class MyViewModel extends Observable implements Observer {
 
+    private IModel model;
     public StringProperty characterPositionRow = new SimpleStringProperty("Row");
     public StringProperty characterPositionColumn = new SimpleStringProperty("Col");
-    private IModel model;
     private int characterPositionRowIndex = 0;
     private int characterPositionColumnIndex = 0;
 
@@ -26,8 +29,8 @@ public class MyViewModel extends Observable implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (o == model) {
+    public void update(Observable observable, Object object) {
+        if (observable == model) {
             characterPositionRowIndex = model.getCharacterPositionRow();
             characterPositionRow.set(characterPositionRowIndex + "");
             characterPositionColumnIndex = model.getCharacterPositionColumn();

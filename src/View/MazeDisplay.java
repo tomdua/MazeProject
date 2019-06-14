@@ -9,14 +9,18 @@ import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+/**
+ * MazeDisplay class extends Canvas
+ *
+ */
 
 public class MazeDisplay extends Canvas {
     private int[][] maze;
+    private int[][] solved;
     private int characterPositionRow;
     private int characterPositionColumn;
-    private Position endPosition;
-    private int[][] solved;
     private boolean isSolved;
+    private Position endPosition;
     private String homePath = "resources/images/LannisterHome.png";
     private String characterPath = "resources/images/CerseiLannister.png";
     private String wallPath = "resources/images/wallCerseiLannister.jpg";

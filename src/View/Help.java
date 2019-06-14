@@ -9,13 +9,14 @@ import java.util.ResourceBundle;
 public class Help implements Initializable {
     public javafx.scene.control.Button exit;
 
-    public void closew() {
-        Stage s = (Stage) exit.getScene().getWindow();
-        s.close();
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
+    public void closeWindow() {
+        Stage s = (Stage) exit.getScene().getWindow();
+        s.close();
+    }
+
 }

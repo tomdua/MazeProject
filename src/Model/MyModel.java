@@ -6,8 +6,6 @@ import IO.MyDecompressorInputStream;
 import Server.Server;
 import Server.ServerStrategyGenerateMaze;
 import Server.ServerStrategySolveSearchProblem;
-import View.Main;
-import View.MazeDisplay;
 import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
@@ -15,9 +13,6 @@ import algorithms.search.AState;
 import algorithms.search.MazeState;
 import algorithms.search.Solution;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -25,10 +20,18 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Observable;
 
+/**
+ * MyModel class extends Observable implements IModel
+ * Responsible for loading the solution and the maze
+ * Works with the server and the client.
+ * Update maze details.
+ * Responsible for keyboard control.
+ */
+
 
 public class MyModel extends Observable implements IModel {
     private int[][] maze;
-    private Maze Original;
+    private Maze myMaze;
     private boolean solved;
     private boolean gameFinish;
     private int characterPositionRow;
@@ -38,7 +41,6 @@ public class MyModel extends Observable implements IModel {
     private Server serverMazeGenerator;
     private Server serverSolveMaze;
     Client client;
-    //private ExecutorService threadPool = Executors.newCachedThreadPool();
 
     public int getCharacterPositionRow() {
         return characterPositionRow;
@@ -58,7 +60,8 @@ public class MyModel extends Observable implements IModel {
         return gameFinish;
     }
 
-    private void MazeToArr(Maze maze) {
+
+    private void mazeToArr(Maze maze) {
         int row = maze.numOfRows();
         int col = maze.numOfColumns();
         this.maze = new int[row][col];
@@ -66,7 +69,7 @@ public class MyModel extends Observable implements IModel {
             for (int j = 0; j < col; j++)
                 this.maze[i][j] = maze.getCellValue(i, j);
     }
-
+//Get size of maze, create maze and than compress and sent to client
     @Override
     public int[][] generateMaze(int width, int height) {
         serverMazeGenerator = new Server(5400, 1000, new ServerStrategyGenerateMaze());
@@ -82,21 +85,20 @@ public class MyModel extends Observable implements IModel {
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         toServer.flush();
                         int[] mazeDimensions = new int[]{width, height};
-                        toServer.writeObject(mazeDimensions); //send mazedimensions to server
+                        toServer.writeObject(mazeDimensions);
                         toServer.flush();
-                        byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed withMyCompressor)from server
-                        InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
-                        byte[] decompressedMaze = new byte[mazeDimensions[0] * mazeDimensions[1] + 8 /*CHANGESIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressedmaze -
-                        is.read(decompressedMaze); //Fill decompressedMazewith bytes
+                        byte[] compressedMaze = (byte[]) fromServer.readObject();
+                        InputStream inputStream = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
+                        byte[] decompressedMaze = new byte[mazeDimensions[0] * mazeDimensions[1] + 8 ];
+                        inputStream.read(decompressedMaze);
                         Maze maze = new Maze(decompressedMaze);
                         Position UpdatePos;
-                        //UpdatePos = new Position(1, 1);
                         UpdatePos = maze.getStartPosition();
-                        Original = maze;
+                        myMaze = maze;
                         characterPositionColumn = UpdatePos.getColumnIndex();
                         characterPositionRow = UpdatePos.getRowIndex();
                         endPosition = maze.getGoalPosition();
-                        MazeToArr(maze);
+                        mazeToArr(maze);
                        Thread.sleep(2000);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -113,7 +115,7 @@ public class MyModel extends Observable implements IModel {
         return maze;
     }
 
-
+// Read the maze from the client, and get the solution if excite from temp dir
     @Override
     public void generateSolution(MyViewModel m, int charRow, int charCol, String str) {
         serverSolveMaze = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
@@ -126,12 +128,11 @@ public class MyModel extends Observable implements IModel {
                         ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         toServer.flush();
-                        Maze maze = Original;
+                        Maze maze = myMaze;
                         maze.setStartPosition(new Position(charRow,charCol));
-                        toServer.writeObject(maze); //send maze to server
+                        toServer.writeObject(maze);
                         toServer.flush();
-                        Solution mazeSolution = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor)from server
-                        //Print Maze Solution retrieved from the server
+                        Solution mazeSolution = (Solution) fromServer.readObject();
                         solved = true;
                         ArrayList<AState> mazeSolutionSteps = mazeSolution.getSolutionPath();
                         int sizeOfSolution = mazeSolutionSteps.size();
@@ -144,7 +145,7 @@ public class MyModel extends Observable implements IModel {
                         }
                         setChanged();
                         notifyObservers();
-                        Thread.sleep(2000);
+                        Thread.sleep(1500);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -156,13 +157,13 @@ public class MyModel extends Observable implements IModel {
         }
         serverSolveMaze.stop();
     }
-
+//Check if is legal move
     private boolean isNotLegalMove(int x, int y) {
         if (x < 0 || y < 0 || x > maze.length - 1 || y > maze[0].length - 1)
             return true;
         return maze[x][y] == 1;
     }
-
+//control : keyboard
     @Override
     public void moveCharacter(KeyCode movement) {
         int x = characterPositionRow;
@@ -275,51 +276,53 @@ public class MyModel extends Observable implements IModel {
     }
 
     public void setMazeOriginal(Maze m){
-        this.Original=m;
-        MazeToArr(m);
+        this.myMaze =m;
+        mazeToArr(m);
     }
 
     public boolean isSolved() {
         return this.solved;
     }
-
     public int[][] getMazeSolutionArr() {
         return mazeSolutionArr;
     }
 
-    public void save(File file)
-    {
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            ObjectOutputStream os = new ObjectOutputStream(fileOutputStream);
-            solved = false;
-            Original.setStartPosition(new Position(characterPositionRow,characterPositionColumn));
-            os.writeObject(Original);
-            os.flush();
-            os.close();
-        } catch (IOException ignored) {
 
-        }
-    }
-
+//Load file (maze)
     public void load(File file)
     {
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream os = new ObjectInputStream(fileInputStream);
-            Maze temp = (Maze)os.readObject();
-            setMazeOriginal(temp);
-            setGoalPosition(temp.getGoalPosition());
-            setCharacterPositionRow(temp.getStartPosition().getRowIndex());
-            setCharacterPositionCol(temp.getStartPosition().getColumnIndex());
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            Maze mazeTemp;
+            mazeTemp = (Maze)objectInputStream.readObject();
+            setMazeOriginal(mazeTemp);
+            setGoalPosition(mazeTemp.getGoalPosition());
+            setCharacterPositionRow(mazeTemp.getStartPosition().getRowIndex());
+            setCharacterPositionCol(mazeTemp.getStartPosition().getColumnIndex());
             solved=false;
-            os.close();
+            objectInputStream.close();
             setChanged();
             notifyObservers();
-        } catch (IOException ignored) {
-
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+//Save file.
+    public void save(File file)
+    {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            solved = false;
+            myMaze.setStartPosition(new Position(characterPositionRow,characterPositionColumn));
+            objectOutputStream.writeObject(myMaze);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        } catch (IOException e) {
+         e.printStackTrace();
         }
     }
 }

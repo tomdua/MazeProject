@@ -44,12 +44,16 @@ import java.util.Observer;
 import java.util.Optional;
 
 import static javax.swing.text.StyleConstants.Bold;
+/**
+ * MyViewController class extends Observable implements IView
 
+ */
 public class MyViewController implements Observer, IView {
-
-    private static final int startTime = 10;
+//Time:
+    private static final int startTime = 120;
     private static final String startLives = "* * *";
     private Timeline timeline= new Timeline(60);
+//fxml:
     @FXML
     private static MyViewModel viewModel = new MyViewModel(new MyModel());
     private final StringProperty lives = new SimpleStringProperty(startLives);
@@ -57,20 +61,23 @@ public class MyViewController implements Observer, IView {
     public MazeDisplay mazeDisplay = new MazeDisplay();
     public StringProperty characterPositionRow = new SimpleStringProperty();
     public StringProperty characterPositionColumn = new SimpleStringProperty();
-    public javafx.scene.control.TextField txt_row;
-    public javafx.scene.control.TextField txt_col;
-    public javafx.scene.control.Label lbl_rowsNum;
-    public javafx.scene.control.Label lbl_columnsNum;
-    public javafx.scene.control.Label lbl_timeLeft;
-    public javafx.scene.control.Label lbl_livesLeft;
-    public javafx.scene.control.Button btn_GenerateMaze;
-    public javafx.scene.control.Button btn_SolveMaze;
-    public javafx.scene.control.Button btn_StopMusic;
+    //TextField:
+    public javafx.scene.control.TextField text_row;
+    public javafx.scene.control.TextField text_col;
+    //Labels:
+    public javafx.scene.control.Label label_rowsNum;
+    public javafx.scene.control.Label label_columnsNum;
+    public javafx.scene.control.Label label_timeLeft;
+    public javafx.scene.control.Label label_livesLeft;
+    //Buttons:
+    public Button button;
+    public javafx.scene.control.Button button_GenerateMaze;
+    public javafx.scene.control.Button button_SolveMaze;
+    public javafx.scene.control.Button button_StopMusic;
+
     public AnchorPane MazePane;
     public ChoiceBox cbBCharacter;
-    public Button button;
 
-    int mazeNum = 1;
     boolean showOnce = false;
     boolean songOnce = true;
     private Timeline time;
@@ -84,11 +91,12 @@ public class MyViewController implements Observer, IView {
     }
 
     private void bindProperties(MyViewModel viewModel) {
-        lbl_timeLeft.textProperty().bind(timeSeconds.asString());
-        lbl_livesLeft.textProperty().bind(lives);
-        lbl_rowsNum.textProperty().bind(viewModel.characterPositionRow);
-        lbl_columnsNum.textProperty().bind(viewModel.characterPositionColumn);
+        label_timeLeft.textProperty().bind(timeSeconds.asString());
+        label_livesLeft.textProperty().bind(lives);
+        label_rowsNum.textProperty().bind(viewModel.characterPositionRow);
+        label_columnsNum.textProperty().bind(viewModel.characterPositionColumn);
     }
+
     @Override
     public void update(Observable o, Object arg) {
         if (o == viewModel) {
@@ -103,7 +111,7 @@ public class MyViewController implements Observer, IView {
                 Music(1);
                 time.stop();
                 alert.show();
-                btn_GenerateMaze.setDisable(false);
+                button_GenerateMaze.setDisable(false);
                 showOnce = true;
             }
             mazeDisplay.redraw();
@@ -127,38 +135,38 @@ public class MyViewController implements Observer, IView {
     public void generateMaze() {
         if (songOnce == true)
             Music(0);
-        btn_StopMusic.setVisible(true);
-        btn_GenerateMaze.setDisable(true);
+        button_StopMusic.setVisible(true);
+        button_GenerateMaze.setDisable(true);
         lives.setValue("* * *");
         if (time != null)
             time.stop();
         Timer();
         showOnce = false;
-        int height, width;
+        int row, col;
         try {
-            height = Integer.valueOf(txt_row.getText());
-            if (height <= 0) {
-                height = 10;
-                txt_row.setText("10");
+            row = Integer.valueOf(text_row.getText());
+            if (row <= 0) {
+                row = 10;
+                text_row.setText("10");
             }
         } catch (Exception e) {
-            height = 10;
-            txt_row.setText("10");
+            row = 10;
+            text_row.setText("10");
         }
         try {
-            width = Integer.valueOf(txt_col.getText());
-            if (width <= 0) {
-                width = 10;
-                txt_col.setText("10");
+            col = Integer.valueOf(text_col.getText());
+            if (col <= 0) {
+                col = 10;
+                text_col.setText("10");
             }
         } catch (Exception e) {
-            width = 10;
-            txt_col.setText("10");
+            col = 10;
+            text_col.setText("10");
         }
-        int[][] temp = viewModel.generateMaze(height, width);
+        int[][] temp = viewModel.generateMaze(row, col);
         mazeDisplay.setMaze(temp);
         mazeDisplay.endPosition(viewModel.getEndPosition());
-        btn_SolveMaze.setVisible(true);
+        button_SolveMaze.setVisible(true);
         displayMaze(temp);
     }
 
@@ -200,50 +208,50 @@ public class MyViewController implements Observer, IView {
             Platform.exit();
         }
     }
-
+//Add about stage
     public void About() {
         try {
-            Stage stage = new Stage();
-            stage.setTitle("About");
+            Stage aboutStage = new Stage();
+            aboutStage.setTitle("About");
             FXMLLoader fxmlLoader = new FXMLLoader();
             Parent root = fxmlLoader.load(getClass().getResource("About.fxml").openStream());
             Scene scene = new Scene(root, 300, 165);
             scene.getStylesheets().add("box.css");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
-            stage.show();
+            aboutStage.setScene(scene);
+            aboutStage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
+            aboutStage.show();
         } catch (Exception e) {
             System.out.println("Error About.fxml not found");
         }
     }
-
+//Add help stage
     public void Help() {
         try {
-            Stage stage = new Stage();
-            stage.setTitle("Help");
+            Stage helpStage = new Stage();
+            helpStage.setTitle("Help");
             FXMLLoader fxmlLoader = new FXMLLoader();
             Parent root = fxmlLoader.load(getClass().getResource("Help.fxml").openStream());
             Scene scene = new Scene(root);
             scene.getStylesheets().add("box.css");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
-            stage.show();
+            helpStage.setScene(scene);
+            helpStage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
+            helpStage.show();
         } catch (Exception e) {
             System.out.println("Error miss file: Help.fxml");
         }
     }
-
+//add option stage
     public void Option() {
         try {
-            Stage stage = new Stage();
-            stage.setTitle("Option");
+            Stage optionStage = new Stage();
+            optionStage.setTitle("Option");
             FXMLLoader fxmlLoader = new FXMLLoader();
             Parent root = fxmlLoader.load(getClass().getResource("Option.fxml").openStream());
             Scene scene = new Scene(root);
             scene.getStylesheets().add("box.css");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
-            stage.show();
+            optionStage.setScene(scene);
+            optionStage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
+            optionStage.show();
         } catch (Exception e) {
             System.out.println("Error miss file: Option.fxml");
         }
@@ -255,8 +263,7 @@ public class MyViewController implements Observer, IView {
         if (!filePath.exists())
             filePath.mkdir();
         fc.setTitle("Saving maze");
-        fc.setInitialFileName("GameOfThrones_MazeNumber" + mazeNum);
-        mazeNum++;
+        fc.setInitialFileName("GameOfThrones_MazeNumber");
         fc.setInitialDirectory(filePath);
         File file = fc.showSaveDialog(mazeDisplay.getScene().getWindow());
         if (file != null)
@@ -267,7 +274,7 @@ public class MyViewController implements Observer, IView {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Loading maze");
         File filePath = new File("./GameOfThrones_Mazes/");
-        if (filePath.exists() != false)
+        if (!filePath.exists())
             filePath.mkdir();
         fileChooser.setInitialDirectory(filePath);
         File file = fileChooser.showOpenDialog(new PopupWindow() {
@@ -367,7 +374,7 @@ public class MyViewController implements Observer, IView {
                     "try again next time");
             alert.show();
             time.stop();
-            btn_GenerateMaze.setDisable(false);
+            button_GenerateMaze.setDisable(false);
         }
     }
 
@@ -381,16 +388,16 @@ public class MyViewController implements Observer, IView {
     private void setMusic(boolean musicOn) {
         if (musicOn) {
             this.mediaPlayer.play();
-            btn_StopMusic.setText("Mute");
+            button_StopMusic.setText("Mute");
         } else {
             this.mediaPlayer.stop();
-            btn_StopMusic.setText("Music");
+            button_StopMusic.setText("Music");
 
         }
     }
     //set music on mute
     public void Mute() {
-        if (btn_StopMusic.getText().equals("Music")) {
+        if (button_StopMusic.getText().equals("Music")) {
             setMusic(true);
         } else {
             setMusic(false);
@@ -477,6 +484,6 @@ public class MyViewController implements Observer, IView {
             mazeDisplay.changeImages("Daenerys");
         else
             mazeDisplay.changeImages("CerseiLannister");
-        btn_GenerateMaze.setVisible(true);
+        button_GenerateMaze.setVisible(true);
     }
 }

@@ -8,13 +8,15 @@ import java.util.ResourceBundle;
 public class Option implements Initializable {
     public javafx.scene.control.Button exit;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
     public void closeWindow() {
         Stage s = (Stage) exit.getScene().getWindow();
         s.close();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
 
-    }
 }

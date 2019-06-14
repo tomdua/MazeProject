@@ -30,24 +30,19 @@ public class Main extends Application {
         MyModel model = new MyModel();
         MyViewModel viewModel = new MyViewModel(model);
         model.addObserver(viewModel);
-        //--------------
         primaryStage.setTitle("Game Of Thrones Maze");
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent root = fxmlLoader.load(getClass().getResource("MyView.fxml").openStream());
-
         Scene scene = new Scene(root, 600, 500);
         scene.getStylesheets().add("Main.css");
-
         primaryStage.getIcons().add(new Image("file:resources/images/icon.png"));
         primaryStage.setMinHeight(500);
         primaryStage.setMinWidth(600);
-        //--------------
         MyViewController view = fxmlLoader.getController();
         view.setResizeEvent(scene);
         view.setViewModel(viewModel);
         viewModel.addObserver(view);
         primaryStage.setScene(scene);
-        //--------------
         SetStageCloseEvent(primaryStage);
         primaryStage.show();
     }

@@ -19,6 +19,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * MyModel class extends Observable implements IModel
@@ -41,6 +43,11 @@ public class MyModel extends Observable implements IModel {
     private Server serverMazeGenerator;
     private Server serverSolveMaze;
     Client client;
+    ExecutorService threadPool;
+
+    public MyModel() {
+        this.threadPool = Executors.newFixedThreadPool(15);
+    }
 
     public int getCharacterPositionRow() {
         return characterPositionRow;
@@ -72,7 +79,8 @@ public class MyModel extends Observable implements IModel {
 //Get size of maze, create maze and than compress and sent to client
     @Override
     public int[][] generateMaze(int width, int height) {
-        serverMazeGenerator = new Server(5400, 1000, new ServerStrategyGenerateMaze());
+        serverMazeGenerator = new Server(5400, 1000, new ServerStrategyGenerateMaze()
+        );
         serverMazeGenerator.start();
         try {
             client = new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
@@ -99,7 +107,7 @@ public class MyModel extends Observable implements IModel {
                         characterPositionRow = UpdatePos.getRowIndex();
                         endPosition = maze.getGoalPosition();
                         mazeToArr(maze);
-                       Thread.sleep(2000);
+                      Thread.sleep(3000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -110,6 +118,7 @@ public class MyModel extends Observable implements IModel {
             e.printStackTrace();
         }
         serverMazeGenerator.stop();
+        //threadPool.shutdownNow();
         setChanged();
         notifyObservers();
         return maze;
@@ -145,7 +154,7 @@ public class MyModel extends Observable implements IModel {
                         }
                         setChanged();
                         notifyObservers();
-                        Thread.sleep(1500);
+                        Thread.sleep(3000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -157,6 +166,7 @@ public class MyModel extends Observable implements IModel {
         }
         serverSolveMaze.stop();
     }
+
 //Check if is legal move
     private boolean isNotLegalMove(int x, int y) {
         if (x < 0 || y < 0 || x > maze.length - 1 || y > maze[0].length - 1)

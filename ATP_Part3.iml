@@ -8,6 +8,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Mproject-Finish_Part2" level="project" />
+    <orderEntry type="library" name="ATPProjectJAR" level="project" />
   </component>
 </module>

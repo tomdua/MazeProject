@@ -1,4 +1,4 @@
-2019.06.14 18:28:33.592 ERROR Server.Server - IOException:
+W2019.06.14 18:28:33.592 ERROR Server.Server - IOException:
 java.net.BindException: Address already in use: JVM_Bind
 	at java.net.DualStackPlainSocketImpl.bind0(Native Method) ~[?:1.8.0_171]
 	at java.net.DualStackPlainSocketImpl.socketBind(DualStackPlainSocketImpl.java:106) ~[?:1.8.0_171]

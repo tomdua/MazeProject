@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -12,12 +13,16 @@
         <Font name="System Bold" size="19.5" />
       </font>
     </Text>
-    <Text fill="BLACK" layoutX="8.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This maze is a project made in &quot;Advance Programing&quot; course" wrappingWidth="219.47003173828125">
+    <Text fill="BLACK" layoutX="8.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This maze is a ATP project made at &quot;Advance Programing&quot; course in Ben-Gurion University" wrappingWidth="219.47003173828125">
       <font>
-        <Font size="17.7" fx:id="x1" />
+        <Font size="14.0" />
       </font>
     </Text>
-    <Text fill="BLACK" font="$x1" layoutX="8.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright (c) 2019,Tom and Almog" wrappingWidth="202.13671875" />
+    <Text fill="BLACK" layoutX="-4.0" layoutY="118.0" scaleX="0.8954335750439539" scaleY="0.9624261849403488" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright (c) 2019,Tom &amp; Almog" wrappingWidth="202.13671875">
+      <font>
+        <Font size="13.5" fx:id="x1" />
+      </font>
+    </Text>
     <Button fx:id="exit" contentDisplay="CENTER" layoutX="98.0" layoutY="134.0" mnemonicParsing="false" onAction="#closeWindow" text="Close Window" />
   </children>
 </Pane>

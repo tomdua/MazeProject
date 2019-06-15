@@ -258,14 +258,14 @@ public class MyViewController implements Observer, IView {
     }
 
     public void saveGame() {
-        FileChooser fc = new FileChooser();
+        FileChooser fileChooser = new FileChooser();
         File filePath = new File("./GameOfThrones_Mazes/");
         if (!filePath.exists())
             filePath.mkdir();
-        fc.setTitle("Saving maze");
-        fc.setInitialFileName("GameOfThrones_MazeNumber");
-        fc.setInitialDirectory(filePath);
-        File file = fc.showSaveDialog(mazeDisplay.getScene().getWindow());
+        fileChooser.setTitle("Saving maze");
+        fileChooser.setInitialFileName("GameOfThrones_MazeNumber");
+        fileChooser.setInitialDirectory(filePath);
+        File file = fileChooser.showSaveDialog(mazeDisplay.getScene().getWindow());
         if (file != null)
             viewModel.save(file);
     }
@@ -285,6 +285,16 @@ public class MyViewController implements Observer, IView {
                 Music(0);
             mazeDisplay.redraw();
         }
+    }
+    //button of change characters.
+    public void cbCharacter() {
+        if (cbBCharacter.getValue().equals("JonSnow"))
+            mazeDisplay.changeImages("JonSnow");
+        else if (cbBCharacter.getValue().equals("Daenerys"))
+            mazeDisplay.changeImages("Daenerys");
+        else
+            mazeDisplay.changeImages("CerseiLannister");
+        button_GenerateMaze.setVisible(true);
     }
 
     //set music on
@@ -476,14 +486,5 @@ public class MyViewController implements Observer, IView {
     }
 
 
-    //button of change characters.
-    public void cbCharacter() {
-        if (cbBCharacter.getValue().equals("JonSnow"))
-            mazeDisplay.changeImages("JonSnow");
-        else if (cbBCharacter.getValue().equals("Daenerys"))
-            mazeDisplay.changeImages("Daenerys");
-        else
-            mazeDisplay.changeImages("CerseiLannister");
-        button_GenerateMaze.setVisible(true);
-    }
+
 }

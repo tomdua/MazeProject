@@ -4259,3 +4259,33 @@ java.net.BindException: Address already in use: JVM_Bind
 2019.06.15 15:00:01.450 INFO  Server.Server - Server is waiting for clients...
 2019.06.15 15:00:01.450 INFO  Server.Server - Client excepted: Socket[addr=/192.168.56.1,port=63057,localport=5400]
 2019.06.15 15:00:02.459 DEBUG Server.Server - Socket Timeout - No clients are waiting!
+2019.06.15 15:01:20.779 INFO  Server.Server - Server starter at ServerSocket[addr=0.0.0.0/0.0.0.0,localport=5400]!
+2019.06.15 15:01:20.781 INFO  Server.Server - Server's Strategy: ServerStrategyGenerateMaze
+2019.06.15 15:01:20.781 INFO  Server.Server - Server is waiting for clients...
+2019.06.15 15:01:20.782 INFO  Server.Server - Client excepted: Socket[addr=/192.168.56.1,port=63120,localport=5400]
+2019.06.15 15:01:21.790 DEBUG Server.Server - Socket Timeout - No clients are waiting!
+2019.06.15 15:01:25.595 INFO  Server.Server - Server starter at ServerSocket[addr=0.0.0.0/0.0.0.0,localport=5401]!
+2019.06.15 15:01:25.596 INFO  Server.Server - Server's Strategy: ServerStrategySolveSearchProblem
+2019.06.15 15:01:25.596 INFO  Server.Server - Server is waiting for clients...
+2019.06.15 15:01:25.596 INFO  Server.Server - Client excepted: Socket[addr=/192.168.56.1,port=63123,localport=5401]
+2019.06.15 15:01:26.610 DEBUG Server.Server - Socket Timeout - No clients are waiting!
+2019.06.15 15:01:30.209 INFO  Server.Server - Server starter at ServerSocket[addr=0.0.0.0/0.0.0.0,localport=5400]!
+2019.06.15 15:01:30.210 INFO  Server.Server - Server's Strategy: ServerStrategyGenerateMaze
+2019.06.15 15:01:30.210 INFO  Server.Server - Server is waiting for clients...
+2019.06.15 15:01:30.211 INFO  Server.Server - Client excepted: Socket[addr=/192.168.56.1,port=63124,localport=5400]
+2019.06.15 15:01:31.220 DEBUG Server.Server - Socket Timeout - No clients are waiting!
+2019.06.15 15:01:54.115 INFO  Server.Server - Server starter at ServerSocket[addr=0.0.0.0/0.0.0.0,localport=5400]!
+2019.06.15 15:01:54.115 INFO  Server.Server - Server's Strategy: ServerStrategyGenerateMaze
+2019.06.15 15:01:54.116 INFO  Server.Server - Server is waiting for clients...
+2019.06.15 15:01:54.116 INFO  Server.Server - Client excepted: Socket[addr=/192.168.56.1,port=63129,localport=5400]
+2019.06.15 15:01:55.120 DEBUG Server.Server - Socket Timeout - No clients are waiting!
+2019.06.15 15:01:55.432 INFO  Server.Server - Server starter at ServerSocket[addr=0.0.0.0/0.0.0.0,localport=5401]!
+2019.06.15 15:01:55.432 INFO  Server.Server - Server's Strategy: ServerStrategySolveSearchProblem
+2019.06.15 15:01:55.433 INFO  Server.Server - Server is waiting for clients...
+2019.06.15 15:01:55.433 INFO  Server.Server - Client excepted: Socket[addr=/192.168.56.1,port=63130,localport=5401]
+2019.06.15 15:01:56.440 DEBUG Server.Server - Socket Timeout - No clients are waiting!
+2019.06.15 15:02:06.707 INFO  Server.Server - Server starter at ServerSocket[addr=0.0.0.0/0.0.0.0,localport=5400]!
+2019.06.15 15:02:06.709 INFO  Server.Server - Server's Strategy: ServerStrategyGenerateMaze
+2019.06.15 15:02:06.709 INFO  Server.Server - Server is waiting for clients...
+2019.06.15 15:02:07.191 INFO  Server.Server - Client excepted: Socket[addr=/192.168.56.1,port=63137,localport=5400]
+2019.06.15 15:02:08.207 DEBUG Server.Server - Socket Timeout - No clients are waiting!

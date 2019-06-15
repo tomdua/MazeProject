@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ATPProject:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ATPProject_jar</output-path>
+    <root id="archive" name="ATP_Part3.jar">
+      <element id="module-output" name="ATP_Part3" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/NEWJAR/new/ATPProjectJAR_jar/commons-io-2.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/NEWJAR/new/ATPProjectJAR_jar/log4j-api-2.9.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/NEWJAR/new/ATPProjectJAR_jar/log4j-core-2.9.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/NEWJAR/new/ATPProjectJAR_jar/commons-lang3-3.3.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/NEWJAR/new/ATPProjectJAR_jar/Mproject-Finish_Part2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

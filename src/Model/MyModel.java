@@ -107,7 +107,7 @@ public class MyModel extends Observable implements IModel {
                         characterPositionRow = UpdatePos.getRowIndex();
                         endPosition = maze.getGoalPosition();
                         mazeToArr(maze);
-                      Thread.sleep(3000);
+                    //  Thread.sleep(2000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -154,7 +154,7 @@ public class MyModel extends Observable implements IModel {
                         }
                         setChanged();
                         notifyObservers();
-                        Thread.sleep(3000);
+              //          Thread.sleep(2000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

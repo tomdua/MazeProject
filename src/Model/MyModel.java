@@ -22,6 +22,7 @@ import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
 /**
  * MyModel class extends Observable implements IModel
  * Responsible for loading the solution and the maze

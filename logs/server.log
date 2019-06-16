@@ -932,3 +932,8 @@ java.net.BindException: Address already in use: JVM_Bind
 2019.06.16 17:32:14.466 INFO  Server.Server - Server is waiting for clients...
 2019.06.16 17:32:14.466 INFO  Server.Server - Client excepted: Socket[addr=/192.168.56.1,port=54328,localport=5400]
 2019.06.16 17:32:15.470 DEBUG Server.Server - Socket Timeout - No clients are waiting!
+2019.06.16 17:43:19.068 INFO  Server.Server - Server starter at ServerSocket[addr=0.0.0.0/0.0.0.0,localport=5400]!
+2019.06.16 17:43:19.070 INFO  Server.Server - Server's Strategy: ServerStrategyGenerateMaze
+2019.06.16 17:43:19.070 INFO  Server.Server - Server is waiting for clients...
+2019.06.16 17:43:19.070 INFO  Server.Server - Client excepted: Socket[addr=/192.168.1.103,port=63115,localport=5400]
+2019.06.16 17:43:20.075 DEBUG Server.Server - Socket Timeout - No clients are waiting!

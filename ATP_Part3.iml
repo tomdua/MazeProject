@@ -12,11 +12,10 @@
     <orderEntry type="module-library" exported="">
       <library name="ATPProjectJAR_jar">
         <CLASSES>
-          <root url="file://$USER_HOME$/Downloads/Mproject-Finish_Part2/Mproject-Finish_Part2/out/artifacts/ATPProjectJAR_jar" />
+          <root url="jar://$MODULE_DIR$/out/artifacts/ATP_Part3_jar/Mproject-Finish_Part2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://$USER_HOME$/Downloads/Mproject-Finish_Part2/Mproject-Finish_Part2/out/artifacts/ATPProjectJAR_jar" recursive="false" />
       </library>
     </orderEntry>
   </component>

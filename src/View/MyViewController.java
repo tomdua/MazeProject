@@ -46,7 +46,8 @@ import java.util.Optional;
 import static javax.swing.text.StyleConstants.Bold;
 /**
  * MyViewController class extends Observable implements IView
-
+ * In charge of View part in the App
+ * Connecting to the view fxml file
  */
 public class MyViewController implements Observer, IView {
 //Time:

@@ -1,12 +1,11 @@
 package Model;
 
-import View.MazeDisplay;
+
 import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
+
 
 import java.io.File;
 

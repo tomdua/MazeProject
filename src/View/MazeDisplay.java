@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 /**
  * MazeDisplay class extends Canvas
- *
+ * Represents all the details we want to see in the Maze part
  */
 public class MazeDisplay extends Canvas {
     private int[][] maze;

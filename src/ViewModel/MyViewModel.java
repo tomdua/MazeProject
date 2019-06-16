@@ -14,7 +14,7 @@ import java.util.Observable;
 import java.util.Observer;
 /**
  * MyViewModel class extends Observable implements Observer
-
+ * Connecting between the View and the Model in the App
  */
 public class MyViewModel extends Observable implements Observer {
 

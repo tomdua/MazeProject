@@ -917,3 +917,18 @@ java.net.BindException: Address already in use: JVM_Bind
 2019.06.14 18:52:02.540 DEBUG Server.Server - Socket Timeout - No clients are waiting!
 2019.06.14 18:52:03.541 DEBUG Server.Server - Socket Timeout - No clients are waiting!
 2019.06.14 18:52:04.542 DEBUG Server.Server - Socket Timeout - No clients are waiting!
+2019.06.16 17:31:30.023 INFO  Server.Server - Server starter at ServerSocket[addr=0.0.0.0/0.0.0.0,localport=5400]!
+2019.06.16 17:31:30.026 INFO  Server.Server - Server's Strategy: ServerStrategyGenerateMaze
+2019.06.16 17:31:30.027 INFO  Server.Server - Server is waiting for clients...
+2019.06.16 17:31:30.027 INFO  Server.Server - Client excepted: Socket[addr=/192.168.56.1,port=54326,localport=5400]
+2019.06.16 17:31:31.038 DEBUG Server.Server - Socket Timeout - No clients are waiting!
+2019.06.16 17:32:02.394 INFO  Server.Server - Server starter at ServerSocket[addr=0.0.0.0/0.0.0.0,localport=5400]!
+2019.06.16 17:32:02.394 INFO  Server.Server - Server's Strategy: ServerStrategyGenerateMaze
+2019.06.16 17:32:02.395 INFO  Server.Server - Server is waiting for clients...
+2019.06.16 17:32:02.395 INFO  Server.Server - Client excepted: Socket[addr=/192.168.56.1,port=54327,localport=5400]
+2019.06.16 17:32:03.405 DEBUG Server.Server - Socket Timeout - No clients are waiting!
+2019.06.16 17:32:14.465 INFO  Server.Server - Server starter at ServerSocket[addr=0.0.0.0/0.0.0.0,localport=5400]!
+2019.06.16 17:32:14.466 INFO  Server.Server - Server's Strategy: ServerStrategyGenerateMaze
+2019.06.16 17:32:14.466 INFO  Server.Server - Server is waiting for clients...
+2019.06.16 17:32:14.466 INFO  Server.Server - Client excepted: Socket[addr=/192.168.56.1,port=54328,localport=5400]
+2019.06.16 17:32:15.470 DEBUG Server.Server - Socket Timeout - No clients are waiting!

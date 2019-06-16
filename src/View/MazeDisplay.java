@@ -13,7 +13,6 @@ import java.io.FileNotFoundException;
  * MazeDisplay class extends Canvas
  *
  */
-
 public class MazeDisplay extends Canvas {
     private int[][] maze;
     private int[][] solved;
@@ -21,9 +20,9 @@ public class MazeDisplay extends Canvas {
     private int characterPositionColumn;
     private boolean isSolved;
     private Position endPosition;
-    private String homePath = "resources/images/LannisterHome.png";
-    private String characterPath = "resources/images/CerseiLannister.png";
-    private String wallPath = "resources/images/wallCerseiLannister.jpg";
+    private String homePath = "";
+    private String characterPath = "";
+    private String wallPath = "";
     GraphicsContext graphics = getGraphicsContext2D();
 
     public int[][] getMaze() {
@@ -71,14 +70,6 @@ public class MazeDisplay extends Canvas {
     public void setCharacterPosition(int row, int column) {
         characterPositionRow = row;
         characterPositionColumn = column;
-    }
-
-    public int getCharacterPositionRaw() {
-        return characterPositionRow;
-    }
-
-    public int getCharacterPositionColumn() {
-        return characterPositionColumn;
     }
 
     public void isSolved(boolean solved) {
@@ -131,8 +122,7 @@ public class MazeDisplay extends Canvas {
             }
         }
     }
-    //change the images of the characters.
-    // change the home,wall and characte images.
+    // change the home,wall and character images.
     public void changeImages(String character) {
         if (character.equals("JonSnow")) {
             setCharacterPath("resources/images/JonSnow.png");

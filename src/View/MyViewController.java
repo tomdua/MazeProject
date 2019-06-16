@@ -87,7 +87,7 @@ public class MyViewController implements Observer, IView {
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
         bindProperties(viewModel);
-        //btn_GenerateMaze.setVisible(false);
+        button_GenerateMaze.setDisable(true);
     }
 
     private void bindProperties(MyViewModel viewModel) {
@@ -107,7 +107,7 @@ public class MyViewController implements Observer, IView {
             if (viewModel.gameFinish() && !showOnce) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Well Done,\n" +
-                        "You'r the king of the seven kingdoms");
+                        "You are the king of the seven kingdoms");
                 Music(1);
                 time.stop();
                 alert.show();
@@ -129,7 +129,6 @@ public class MyViewController implements Observer, IView {
         this.characterPositionColumn.set(characterPositionColumn + "");
         if (viewModel.isSolved())
             mazeDisplay.redraw();
-        //  btn_GenerateMaze.setDisable(false);
     }
 
     public void generateMaze() {
@@ -294,7 +293,8 @@ public class MyViewController implements Observer, IView {
             mazeDisplay.changeImages("Daenerys");
         else
             mazeDisplay.changeImages("CerseiLannister");
-        button_GenerateMaze.setVisible(true);
+        button_GenerateMaze.setDisable(false);
+        //button_GenerateMaze.setVisible(true);
     }
 
     //set music on
@@ -416,8 +416,7 @@ public class MyViewController implements Observer, IView {
 
     public void mouseDragged(MouseEvent mouseEvent) {
         if (mazeDisplay != null) {
-          //  lbl_statusBar.setText("");
-            /*int maxSize = Math.max(viewModel.getMaze()[0].length, viewModel.getMaze().length);
+            int maxSize = Math.max(viewModel.getMaze()[0].length, viewModel.getMaze().length);
             double cellHeight = mazeDisplay.getHeight() / maxSize;
             double cellWidth = mazeDisplay.getWidth() / maxSize;
             double canvasHeight = mazeDisplay.getHeight();
@@ -425,22 +424,22 @@ public class MyViewController implements Observer, IView {
             int rowMazeSize = viewModel.getMaze().length;
             int colMazeSize = viewModel.getMaze()[0].length;
             double startRow = (canvasHeight / 2-(cellHeight * rowMazeSize / 2)) / cellHeight;
-            double startCol = (canvasWidth / 2-(cellWidth * colMazeSize / 2)) / cellWidth;*/
-            int mouseY = (int) Math.floor(mouseEvent.getSceneY() / (mazeDisplay.getWidth() / mazeDisplay.getMaze()[0].length));
-            int mouseX = (int) Math.floor(mouseEvent.getSceneX() / (mazeDisplay.getHeight() / mazeDisplay.getMaze().length));
-            if (!viewModel.gameFinish()) {
-                if (mouseY < viewModel.getCharacterPositionRow())// && mouseX == viewModel.getCharacterPositionColumn()) {
-                    viewModel.moveCharacter(KeyCode.W);
-
-                if (mouseY > viewModel.getCharacterPositionRow())// && mouseX == viewModel.getCharacterPositionColumn()) {
-                    viewModel.moveCharacter(KeyCode.S);
-
-                if (mouseX < viewModel.getCharacterPositionColumn())// && mouseY == viewModel.getCharacterPositionRow()) {
-                    viewModel.moveCharacter(KeyCode.A);
-
-                if (mouseX > viewModel.getCharacterPositionColumn())// && mouseY == viewModel.getCharacterPositionRow()) {
-                    viewModel.moveCharacter(KeyCode.D);
-
+            double startCol = (canvasWidth / 2-(cellWidth * colMazeSize / 2)) / cellWidth;
+            double mouseX = (int) ((mouseEvent.getX()) / (mazeDisplay.getWidth() / maxSize)-startCol);
+            double mouseY = (int) ((mouseEvent.getY()) / (mazeDisplay.getHeight() / maxSize)-startRow);
+            if (!viewModel.isAtTheEnd()) {
+                if (mouseY < viewModel.getCharacterPositionRow() && mouseX == viewModel.getCharacterPositionColumn()) {
+                    viewModel.moveCharacter(KeyCode.UP);
+                }
+                if (mouseY > viewModel.getCharacterPositionRow() && mouseX == viewModel.getCharacterPositionColumn()) {
+                    viewModel.moveCharacter(KeyCode.DOWN);
+                }
+                if (mouseX < viewModel.getCharacterPositionColumn() && mouseY == viewModel.getCharacterPositionRow()) {
+                    viewModel.moveCharacter(KeyCode.LEFT);
+                }
+                if (mouseX > viewModel.getCharacterPositionColumn() && mouseY == viewModel.getCharacterPositionRow()) {
+                    viewModel.moveCharacter(KeyCode.RIGHT);
+                }
             }
         }
     }
@@ -448,7 +447,6 @@ public class MyViewController implements Observer, IView {
     public void zooming(ScrollEvent scrollEvent) {
         try {
             viewModel.getMaze();
-           // AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
             double zoomFactor;
             if (scrollEvent.isControlDown()) {
                 zoomFactor = 1.5;
@@ -484,7 +482,4 @@ public class MyViewController implements Observer, IView {
         );
         timeline.play();
     }
-
-
-
 }

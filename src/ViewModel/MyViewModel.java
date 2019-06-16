@@ -74,6 +74,8 @@ public class MyViewModel extends Observable implements Observer {
         return model.isSolved();
     }
 
+    public boolean isAtTheEnd() { return model.isAtTheEnd(); }
+
     public int[][] getMazeSolutionArr() {
         return model.getMazeSolutionArr();
     }

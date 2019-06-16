@@ -36,6 +36,7 @@ public class MyModel extends Observable implements IModel {
     private Maze myMaze;
     private boolean solved;
     private boolean gameFinish;
+    private boolean isAtTheEnd;
     private int characterPositionRow;
     private int characterPositionColumn;
     private Position endPosition;
@@ -47,6 +48,7 @@ public class MyModel extends Observable implements IModel {
 
     public MyModel() {
         this.threadPool = Executors.newFixedThreadPool(15);
+        isAtTheEnd = false;
     }
 
     public int getCharacterPositionRow() {
@@ -118,6 +120,7 @@ public class MyModel extends Observable implements IModel {
             e.printStackTrace();
         }
         serverMazeGenerator.stop();
+        isAtTheEnd = false;
         //threadPool.shutdownNow();
         setChanged();
         notifyObservers();
@@ -179,21 +182,25 @@ public class MyModel extends Observable implements IModel {
         int x = characterPositionRow;
         int y = characterPositionColumn;
         switch (movement) {
+            case UP:
             case NUMPAD8:
             case W:
                 if (!isNotLegalMove(x - 1, y))
                     characterPositionRow--;
                 break;
+            case DOWN:
             case NUMPAD2:
             case S:
                 if (!isNotLegalMove(x + 1, y))
                     characterPositionRow++;
                 break;
+            case RIGHT:
             case NUMPAD6:
             case D:
                 if (!isNotLegalMove(x, y + 1))
                     characterPositionColumn++;
                 break;
+            case LEFT:
             case A:
             case NUMPAD4:
                 if (!isNotLegalMove(x, y - 1))
@@ -232,42 +239,14 @@ public class MyModel extends Observable implements IModel {
                     }
                 break;
         }
-        if (endPosition.getColumnIndex() == getCharacterPositionColumn() && endPosition.getRowIndex() == getCharacterPositionRow())
+        if (endPosition.getColumnIndex() == getCharacterPositionColumn() && endPosition.getRowIndex() == getCharacterPositionRow()){
             gameFinish = true;
+        isAtTheEnd = false;
+        }
         setChanged();
         notifyObservers();
 
     }
-
- /*   @Override
-    public void moveCharacter(MouseEvent movement, MazeDisplay md) {
-        if (md.getMaze() != null) {
-            int mouseY = (int) Math.floor(movement.getSceneY() / (md.getWidth() / md.getMaze()[0].length));
-            int mouseX = (int) Math.floor(movement.getSceneX() / (md.getHeight() / md.getMaze().length));
-            if (mouseY < md.getCharacterPositionRaw())
-                moveCharacter(KeyCode.NUMPAD8);
-            if (mouseY > md.getCharacterPositionRaw())
-                moveCharacter(KeyCode.NUMPAD2);
-            if (mouseX < md.getCharacterPositionColumn())
-                moveCharacter(KeyCode.NUMPAD4);
-            if (mouseX > md.getCharacterPositionColumn())
-                moveCharacter(KeyCode.NUMPAD6);
-        }
-    }
-
-
-    public void scroll(ScrollEvent event, MazeDisplay mazeDisplay) {
-        Double direction = event.getDeltaY();
-        Stage stage  = Main.primaryStage;
-        if(direction > 0) {
-            stage.setHeight(stage.getHeight()+5);
-            stage.setWidth(stage.getWidth()+5);
-        }else{
-            stage.setHeight(stage.getHeight()-5);
-            stage.setWidth(stage.getWidth()-5);
-        }
-        mazeDisplay.redraw();
-    }*/
 
     @Override
     public int[][] getMaze() {
@@ -293,10 +272,13 @@ public class MyModel extends Observable implements IModel {
     public boolean isSolved() {
         return this.solved;
     }
+
     public int[][] getMazeSolutionArr() {
         return mazeSolutionArr;
     }
 
+    @Override
+    public boolean isAtTheEnd() { return isAtTheEnd; }
 
 //Load file (maze)
     public void load(File file)
@@ -311,6 +293,7 @@ public class MyModel extends Observable implements IModel {
             setCharacterPositionRow(mazeTemp.getStartPosition().getRowIndex());
             setCharacterPositionCol(mazeTemp.getStartPosition().getColumnIndex());
             solved=false;
+            isAtTheEnd = false;
             objectInputStream.close();
             setChanged();
             notifyObservers();

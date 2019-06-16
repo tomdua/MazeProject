@@ -34,6 +34,8 @@ public interface IModel {
 
     boolean gameFinish();
 
+    boolean isAtTheEnd();
+
     void setCharacterPositionCol(int col);
 
     void setCharacterPositionRow(int row);
